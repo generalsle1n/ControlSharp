@@ -1,5 +1,5 @@
-using ControlSharp.Config;
-using ControlSharp.Config.Model;
+using ControlSharp.Api.Config;
+using ControlSharp.Api.Config.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 
