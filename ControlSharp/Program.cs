@@ -1,3 +1,4 @@
+using System.Reflection;
 using ControlSharp.Config;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -20,6 +21,8 @@ Builder.Services.AddDbContext<DatabaseContext>(options =>
 {
     options.UseSqlite(ConnectionData);
 });
+Builder.Services.AddHostedService<MainControl>();
+
 Builder.Services.AddSerilog(Config =>
 {
     string FilePath = Assembly.GetExecutingAssembly().Location;
