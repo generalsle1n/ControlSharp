@@ -1,6 +1,8 @@
 using System.Reflection;
 using ControlSharp.Api.Config;
+using ControlSharp.Api.Config.Model;
 using ControlSharp.Api.Filter;
+using ControlSharp.Api.Hubs;
 using ControlSharp.Services;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -19,6 +21,8 @@ Builder.Services.AddControllers(option =>
 
 Builder.Services.AddEndpointsApiExplorer();
 Builder.Services.AddSwaggerGen();
+Builder.Services.AddSignalR();
+
 
 string ConnectionData = Builder.Configuration.GetConnectionString(DatabaseConnection);
 
@@ -42,7 +46,7 @@ Builder.Services.AddSerilog(Config =>
 var app = Builder.Build();
 
 app.MapDefaultEndpoints();
-
+app.MapHub<AssetHub>("/api/0.1/assetHub");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
