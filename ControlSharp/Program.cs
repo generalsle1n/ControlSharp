@@ -1,4 +1,3 @@
-var builder = WebApplication.CreateBuilder(args);
 using ControlSharp.Config;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,8 +11,11 @@ Builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+Builder.Services.AddEndpointsApiExplorer();
+Builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
+string ConnectionData = Builder.Configuration.GetConnectionString(DatabaseConnection);
+
 Builder.Services.AddDbContext<DatabaseContext>(options =>
 {
     options.UseSqlite(ConnectionData);
