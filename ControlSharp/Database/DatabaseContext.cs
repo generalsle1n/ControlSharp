@@ -5,7 +5,8 @@ namespace ControlSharp.Config;
 
 public class DatabaseContext : DbContext
 {
-    DbSet<Access> Accesses { get; set; }
+    public DbSet<Access> Access { get; set; }
+    public DbSet<Asset> Asset { get; set; }
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
     {
         
