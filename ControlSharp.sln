@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlSharp.Api", "Control
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlSharp.Mgmt", "ControlSharp.Mgmt\ControlSharp.Mgmt.csproj", "{257E572A-BB54-45EF-A388-EBC6BB1337BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlSharp.Ui", "ControlSharp.Ui\ControlSharp.Ui.csproj", "{7EB0C545-0AFB-4E46-8E6F-CEE3444A63E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{257E572A-BB54-45EF-A388-EBC6BB1337BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{257E572A-BB54-45EF-A388-EBC6BB1337BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{257E572A-BB54-45EF-A388-EBC6BB1337BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EB0C545-0AFB-4E46-8E6F-CEE3444A63E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EB0C545-0AFB-4E46-8E6F-CEE3444A63E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EB0C545-0AFB-4E46-8E6F-CEE3444A63E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EB0C545-0AFB-4E46-8E6F-CEE3444A63E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
