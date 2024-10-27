@@ -1,11 +1,11 @@
-using ControlSharp.Config;
-using ControlSharp.Config.Model;
+using ControlSharp.Api.Config;
+using ControlSharp.Api.Config.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
 
-namespace ControlSharp.Filter;
+namespace ControlSharp.Api.Filter;
 
 public class ApiAuthFilter : IAsyncAuthorizationFilter
 {

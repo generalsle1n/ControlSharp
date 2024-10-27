@@ -1,5 +1,5 @@
-using ControlSharp.Config;
-using ControlSharp.Config.Model;
+using ControlSharp.Api.Config;
+using ControlSharp.Api.Config.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
