@@ -3,9 +3,11 @@ using Projects;
 
 IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(args);
 
-builder.AddProject<ControlSharp_Api>("ControlSharp-Api")
+IResourceBuilder<ProjectResource> ControlApi = builder.AddProject<ControlSharp_Api>("ControlSharp-Api")
     .WithReplicas(builder.Configuration.GetValue<int>("Replicas"));
+
 builder.AddProject<ControlSharp_Ui>("ControlSharp-Ui")
-    .WithReplicas(builder.Configuration.GetValue<int>("Replicas"));
+    .WithReplicas(builder.Configuration.GetValue<int>("Replicas"))
+    .WithReference(ControlApi);
 
 builder.Build().Run();
