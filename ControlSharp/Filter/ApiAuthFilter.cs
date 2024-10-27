@@ -41,8 +41,6 @@ public class ApiAuthFilter : IAsyncAuthorizationFilter
                     
                     Access Current = DatabaseResult.First();
                     
-                    Current.LastOnline = DateTimeOffset.Now;
-                    Current.Ip = context.HttpContext.Connection.RemoteIpAddress.ToString();
                     Current.Asset.LastOnline = DateTimeOffset.Now;
                     Current.Asset.Ip = context.HttpContext.Connection.RemoteIpAddress.ToString();
                     

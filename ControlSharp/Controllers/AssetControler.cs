@@ -28,8 +28,6 @@ public class AssetController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> CreateNewAsset(Asset asset, CancellationToken token)
     {
-        bool Result = true;
-        try
         AccessRole Role = (HttpContext.Items["ApiKey"] as ApiKey).Role;
 
         if (Role == AccessRole.Admin)
@@ -40,13 +38,6 @@ public class AssetController : ControllerBase
                 _context.Asset.Add(asset);
                 await _context.SaveChangesAsync(token);
 
-            return new CreatedResult();
-        }
-        catch (Exception e)
-        {
-            Result = false;
-            return new BadRequestObjectResult(e);
-        }
                 return new OkResult();
             }
             catch (Exception e)
