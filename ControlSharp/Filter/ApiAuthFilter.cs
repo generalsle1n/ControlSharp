@@ -29,20 +29,27 @@ public class ApiAuthFilter : IAsyncAuthorizationFilter
             //Check if HeaderKey is an valid Guid
             if(Result)
             {
-                IQueryable<Access> DatabaseResult = _context.Access.Where(item => item.Asset.Id == AssetID && item.Key.Key == SingleHeader.Value.First() && item.Key.Active == true)
-                    .Include(item => item.Asset);
+                IQueryable<Access> DatabaseResult = _context.Access.Where(item =>
+                        item.Asset.Id == AssetID && item.Key.Key == SingleHeader.Value.First() &&
+                        item.Key.Active == true)
+                    .Include(item => item.Asset)
+                    .Include(item => item.Key);
 
                 if (DatabaseResult.Count() == 1)
                 {
                     LoginFailed = false;
                     
-                    Asset Current = DatabaseResult.First().Asset;
+                    Access Current = DatabaseResult.First();
                     
                     Current.LastOnline = DateTimeOffset.Now;
                     Current.Ip = context.HttpContext.Connection.RemoteIpAddress.ToString();
+                    Current.Asset.LastOnline = DateTimeOffset.Now;
+                    Current.Asset.Ip = context.HttpContext.Connection.RemoteIpAddress.ToString();
                     
-                    _context.Asset.Update(Current);
+                    _context.Asset.Update(Current.Asset);
                     await _context.SaveChangesAsync();
+                    
+                    context.HttpContext.Items.Add("ApiKey", Current.Key);
                     
                     break;
                 }

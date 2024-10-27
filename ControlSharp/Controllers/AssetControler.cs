@@ -30,9 +30,15 @@ public class AssetController : ControllerBase
     {
         bool Result = true;
         try
+        AccessRole Role = (HttpContext.Items["ApiKey"] as ApiKey).Role;
+
+        if (Role == AccessRole.Admin)
         {
-            _context.Asset.Add(asset);
-            await _context.SaveChangesAsync(token);
+            bool Result = true;
+            try
+            {
+                _context.Asset.Add(asset);
+                await _context.SaveChangesAsync(token);
 
             return new CreatedResult();
         }
@@ -41,5 +47,19 @@ public class AssetController : ControllerBase
             Result = false;
             return new BadRequestObjectResult(e);
         }
+                return new OkResult();
+            }
+            catch (Exception e)
+            {
+                Result = false;
+                return new BadRequestObjectResult(e);
+            }
+        }
+        else
+        {
+            return new UnauthorizedResult();
+        }
+        
+        
     }
 }

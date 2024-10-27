@@ -51,7 +51,8 @@ public class MainControl : IHostedService
                     Id = Guid.NewGuid(),
                     Active = true,
                     Created = DateTimeOffset.Now,
-                    Key = CreateAdminToken()
+                    Key = CreateAdminToken(),
+                    Role = AccessRole.Admin
                 }
             };
             
