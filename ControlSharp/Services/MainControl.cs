@@ -1,4 +1,5 @@
 using ControlSharp.Config;
+using ControlSharp.Config.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 
@@ -9,7 +10,7 @@ public class MainControl : IHostedService
 {
     private readonly IServiceScope _scope;
     private readonly DatabaseContext _context;
-    public MainControl(IServiceScopeFactory ServiceScopeFactory)
+    private readonly ILogger<MainControl> _logger;
     private const int _adminKeySize = 128;
     public MainControl(IServiceScopeFactory ServiceScopeFactory, ILogger<MainControl> Logger)
     {
