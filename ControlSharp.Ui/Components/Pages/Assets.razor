@@ -1,4 +1,6 @@
 ﻿@page "/assets"
+@using System.Text.Json
+@using ControlSharp.Api.Config.Model
 @attribute [StreamRendering]
 @inject IHttpClientFactory ClientFactory
 
@@ -19,20 +21,24 @@ else
     <table class="table">
         <thead>
         <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Created</th>
+            <th>LastOnline</th>
+            <th>IP</th>
+            <th>Active</th>
         </tr>
         </thead>
         <tbody>
-        @foreach (var forecast in AllAssets)
+        @foreach (Asset SingleAsset in AllAssets)
         {
             <tr>
-                @* <td>@forecast.Date.ToShortDateString()</td> *@
-                @* <td>@forecast.TemperatureC</td> *@
-                @* <td>@forecast.TemperatureF</td> *@
-                @* <td>@forecast.Summary</td> *@
+                <td>@SingleAsset.Id</td>
+                <td>@SingleAsset.Name</td>
+                <td>@SingleAsset.Created</td>
+                <td>@SingleAsset.LastOnline</td>
+                <td>@SingleAsset.Ip</td>
+                <td>@SingleAsset.Active</td>
             </tr>
         }
         </tbody>
@@ -40,32 +46,27 @@ else
 }
 
 @code {
-    private List<Assets>? AllAssets;
+    private List<Asset> AllAssets;
 
     protected override async Task OnInitializedAsync()
     {
-        // Simulate asynchronous loading to demonstrate streaming rendering
-        await Task.Delay(500);
-
         HttpClient Client = ClientFactory.CreateClient();
-        Client.BaseAddress = new Uri("ControlSharp-Api");
+        Client.BaseAddress = new Uri("https://ControlSharp-Api");
 
-        // HttpRequestMessage Request = new HttpRequestMessage()
-        // {
-        //     RequestUri = "/api/0.1/Asset"
-        // };
+        HttpRequestMessage Request = new HttpRequestMessage(HttpMethod.Get, "/api/0.1/Asset");
+
+        string Username = "17715155-1030-401f-86e8-502795abd042";
+        string Password = "+XIAgmVqbELWSB7Cz2E+OWrGkALVhlCLVlJY566ezRRO760qqBm607OKCAxl2HxB9UMmIbBJUx2GnVACwG2LIkKPQVvGWAqEhIbZI9O/+zddUO3LilgPYX6xpsWZ/wd4ywk4f0dMFnJM0sEhxeBU1B93sDe25pXZzqPSxIiPtts=";
         
-        var startDate = DateOnly.FromDateTime(DateTime.Now);
-        var summaries = new[] {"Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"};
-        
-    }
+        Request.Headers.Add(Username, Password);
 
-    private class WeatherForecast
-    {
-        public DateOnly Date { get; set; }
-        public int TemperatureC { get; set; }
-        public string? Summary { get; set; }
-        public int TemperatureF => 32 + (int) (TemperatureC / 0.5556);
-    }
+        HttpResponseMessage Response = await Client.SendAsync(Request);
 
+        string Data = await Response.Content.ReadAsStringAsync();
+        Console.WriteLine(Data);
+        AllAssets = JsonSerializer.Deserialize<List<Asset>>(Data, new JsonSerializerOptions()
+        {
+            PropertyNameCaseInsensitive = true
+        });
+    }
 }
