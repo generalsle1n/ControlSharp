@@ -11,9 +11,11 @@ public class MainControl : IHostedService
     private readonly DatabaseContext _context;
     public MainControl(IServiceScopeFactory ServiceScopeFactory)
     private const int _adminKeySize = 128;
+    public MainControl(IServiceScopeFactory ServiceScopeFactory, ILogger<MainControl> Logger)
     {
         _scope = ServiceScopeFactory.CreateScope();
         _context = _scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+        _logger = Logger;
     }
     
     public Task StartAsync(CancellationToken Token)
@@ -29,7 +31,8 @@ public class MainControl : IHostedService
 
     private void StartUp(CancellationToken Token)
     {
-        _context.Database.EnsureCreated();
+        bool Created = _context.Database.EnsureCreated();
+        
         if (Created)
         {
             _logger.LogInformation("Created Database");
@@ -64,6 +67,7 @@ public class MainControl : IHostedService
             _logger.LogInformation("Database found");
         }
     }
+
     private string CreateAdminToken()
     {
         byte[] TokenData = RandomNumberGenerator.GetBytes(_adminKeySize);
