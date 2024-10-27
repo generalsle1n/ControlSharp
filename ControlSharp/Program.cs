@@ -10,7 +10,7 @@ const string DatabaseConnection = "DefaultConnection";
 
 WebApplicationBuilder Builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+Builder.AddServiceDefaults();
 
 Builder.Services.AddControllers(option =>
 {
@@ -40,6 +40,8 @@ Builder.Services.AddSerilog(Config =>
 });
 
 var app = Builder.Build();
+
+app.MapDefaultEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
