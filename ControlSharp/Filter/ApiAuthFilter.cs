@@ -17,7 +17,7 @@ public class ApiAuthFilter : IAsyncAuthorizationFilter
         _logger = logger;
     }
     
-    public Task OnAuthorizationAsync(AuthorizationFilterContext context)
+    public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
         bool LoginFailed = true;
         foreach (KeyValuePair<string, StringValues> SingleHeader in context.HttpContext.Request.Headers)
@@ -43,6 +43,5 @@ public class ApiAuthFilter : IAsyncAuthorizationFilter
             context.Result = new NotFoundResult();
             _logger.LogInformation($"Denied Access for IP {context.HttpContext.Connection.RemoteIpAddress} because no valid Credentials");
         }
-        return Task.CompletedTask;
     }
 }
