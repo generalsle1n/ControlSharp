@@ -1,5 +1,6 @@
 using System.Reflection;
 using ControlSharp.Config;
+using ControlSharp.Services;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
