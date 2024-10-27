@@ -1,5 +1,7 @@
 using ControlSharp.Config;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Serilog.Events;
 
 const string DatabaseConnection = "DefaultConnection";
 
@@ -17,6 +19,16 @@ string ConnectionData = Builder.Configuration.GetConnectionString(DatabaseConnec
 Builder.Services.AddDbContext<DatabaseContext>(options =>
 {
     options.UseSqlite(ConnectionData);
+});
+Builder.Services.AddSerilog(Config =>
+{
+    string FilePath = Assembly.GetExecutingAssembly().Location;
+    string FolderPath = $@"{Path.GetDirectoryName(FilePath)}\Log.txt";
+
+    Config.MinimumLevel.Debug();
+    
+    Config.WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Information);
+    Config.WriteTo.File(path: FolderPath);
 });
 
 var app = Builder.Build();
