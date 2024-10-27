@@ -1,6 +1,8 @@
 bin/
 obj/
 Data.db
+Data.db-shm
+Data.db-wal
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
