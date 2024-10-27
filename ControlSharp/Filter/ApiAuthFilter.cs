@@ -29,7 +29,7 @@ public class ApiAuthFilter : IAsyncAuthorizationFilter
             //Check if HeaderKey is an valid Guid
             if(Result)
             {
-                IQueryable<Access> DatabaseResult = _context.Access.Where(item => item.Asset.Id == AssetID && item.Key.Key == SingleHeader.Value.First())
+                IQueryable<Access> DatabaseResult = _context.Access.Where(item => item.Asset.Id == AssetID && item.Key.Key == SingleHeader.Value.First() && item.Key.Active == true)
                     .Include(item => item.Asset);
 
                 if (DatabaseResult.Count() == 1)
