@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlSharp", "ControlSharp\ControlSharp.csproj", "{AE461E48-7E0C-478D-B4B8-9AA9D3E87220}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlSharp.Api", "ControlSharp\ControlSharp.Api.csproj", "{AE461E48-7E0C-478D-B4B8-9AA9D3E87220}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
