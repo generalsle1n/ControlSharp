@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlSharp.Api", "Control
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlSharp.Mgmt", "ControlSharp.Mgmt\ControlSharp.Mgmt.csproj", "{257E572A-BB54-45EF-A388-EBC6BB1337BB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlSharp.Ui", "ControlSharp.Ui\ControlSharp.Ui.csproj", "{BDEFD6AB-B8A6-42BF-97FA-83321BD39CBC}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlSharp.Mgmt.Service", "ControlSharp.Mgmt.Service\ControlSharp.Mgmt.Service.csproj", "{E6A9F5DC-302C-440B-B2C4-FCCB633CD944}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlSharp.Ui", "ControlSharp.Ui\ControlSharp.Ui.csproj", "{5377C936-B0C9-44D1-80A2-4E8E5727CD12}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
