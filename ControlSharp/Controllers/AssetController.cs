@@ -1,5 +1,6 @@
 using ControlSharp.Api.Config;
 using ControlSharp.Api.Config.Model;
+using ControlSharp.Api.Filter;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace ControlSharp.Controllers;
 [ApiController]
 [Route("api/0.1/[controller]")]
 [Produces("application/json")]
+[MiddlewareFilter<ApiAuthFilter>]
 public class AssetController : ControllerBase
 {
     private readonly DatabaseContext _context;

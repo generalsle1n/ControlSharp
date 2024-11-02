@@ -9,4 +9,5 @@ public class Asset
     public required DateTimeOffset Created { get; set; }
     public DateTimeOffset? LastOnline { get; set; }
     public string? Ip { get; set; }
+    public bool? Active { get; set; }
 }

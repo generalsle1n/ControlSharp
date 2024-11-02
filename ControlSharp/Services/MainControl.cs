@@ -11,7 +11,7 @@ public class MainControl : IHostedService
     private readonly IServiceScope _scope;
     private readonly DatabaseContext _context;
     private readonly ILogger<MainControl> _logger;
-    private const int _adminKeySize = 128;
+    private const string _adminName = "admin";
     public MainControl(IServiceScopeFactory ServiceScopeFactory, ILogger<MainControl> Logger)
     {
         _scope = ServiceScopeFactory.CreateScope();
@@ -37,31 +37,22 @@ public class MainControl : IHostedService
         if (Created)
         {
             _logger.LogInformation("Created Database");
-            Access Admin = new Access()
+            User Admin = new User()
             {
                 Id = Guid.NewGuid(),
-                Asset = new Asset()
-                {
-                    Id = Guid.Empty,
-                    Created = DateTimeOffset.Now,
-                    Name = "Admin"
-                },
-                Key = new ApiKey()
-                {
-                    Id = Guid.NewGuid(),
-                    Active = true,
-                    Created = DateTimeOffset.Now,
-                    Key = CreateAdminToken(),
-                    Role = AccessRole.Admin
-                }
+                Created = DateTimeOffset.Now,
+                UserName = _adminName,
+                Password = SecretManager.CreateAdminToken(),
+                Active = true,
+                Role = AccessRole.Admin
             };
             
-            _context.Access.Add(Admin);
+            _context.User.Add(Admin);
             _context.SaveChanges();
             
             _logger.LogInformation("Created Admin");
-            _logger.LogInformation($"UserID: {Admin.Asset.Id}");
-            _logger.LogInformation($"Key: {Admin.Key.Key}");
+            _logger.LogInformation($"UserID: {Admin.UserName}");
+            _logger.LogInformation($"Key: {Admin.Password}");
             
         }
         else
@@ -70,11 +61,5 @@ public class MainControl : IHostedService
         }
     }
 
-    private string CreateAdminToken()
-    {
-        byte[] TokenData = RandomNumberGenerator.GetBytes(_adminKeySize);
-        string Secret = Convert.ToBase64String(TokenData);
-        
-        return Secret;
-    }
+    
 }
