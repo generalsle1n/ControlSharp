@@ -11,7 +11,6 @@ public class MainControl : IHostedService
     private readonly IServiceScope _scope;
     private readonly DatabaseContext _context;
     private readonly ILogger<MainControl> _logger;
-    private const int _adminKeySize = 128;
     private const string _adminName = "admin";
     public MainControl(IServiceScopeFactory ServiceScopeFactory, ILogger<MainControl> Logger)
     {
@@ -43,7 +42,7 @@ public class MainControl : IHostedService
                 Id = Guid.NewGuid(),
                 Created = DateTimeOffset.Now,
                 UserName = _adminName,
-                Password = CreateAdminToken(),
+                Password = SecretManager.CreateAdminToken(),
                 Active = true,
                 Role = AccessRole.Admin
             };
@@ -62,11 +61,5 @@ public class MainControl : IHostedService
         }
     }
 
-    private string CreateAdminToken()
-    {
-        byte[] TokenData = RandomNumberGenerator.GetBytes(_adminKeySize);
-        string Secret = Convert.ToBase64String(TokenData);
-        
-        return Secret;
-    }
+    
 }
