@@ -1,14 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlSharp.Api", "ControlSharp\ControlSharp.Api.csproj", "{AE461E48-7E0C-478D-B4B8-9AA9D3E87220}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35222.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlSharp.Api", "ControlSharp\ControlSharp.Api.csproj", "{AE461E48-7E0C-478D-B4B8-9AA9D3E87220}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlSharp.Mgmt", "ControlSharp.Mgmt\ControlSharp.Mgmt.csproj", "{257E572A-BB54-45EF-A388-EBC6BB1337BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlSharp.Mgmt", "ControlSharp.Mgmt\ControlSharp.Mgmt.csproj", "{257E572A-BB54-45EF-A388-EBC6BB1337BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlSharp.Ui", "ControlSharp.Ui\ControlSharp.Ui.csproj", "{BDEFD6AB-B8A6-42BF-97FA-83321BD39CBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlSharp.Ui", "ControlSharp.Ui\ControlSharp.Ui.csproj", "{BDEFD6AB-B8A6-42BF-97FA-83321BD39CBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlSharp.Mgmt.Service", "ControlSharp.Mgmt.Service\ControlSharp.Mgmt.Service.csproj", "{E6A9F5DC-302C-440B-B2C4-FCCB633CD944}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlSharp.Client", "ControlSharp.Client\ControlSharp.Client.csproj", "{60A09F65-8A61-4DD7-88EB-73997833AFBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlSharp.Mgmt.Service", "ControlSharp.Mgmt.Service\ControlSharp.Mgmt.Service.csproj", "{E6A9F5DC-302C-440B-B2C4-FCCB633CD944}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,9 +33,11 @@ Global
 		{E6A9F5DC-302C-440B-B2C4-FCCB633CD944}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6A9F5DC-302C-440B-B2C4-FCCB633CD944}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6A9F5DC-302C-440B-B2C4-FCCB633CD944}.Release|Any CPU.Build.0 = Release|Any CPU
-		{60A09F65-8A61-4DD7-88EB-73997833AFBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{60A09F65-8A61-4DD7-88EB-73997833AFBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{60A09F65-8A61-4DD7-88EB-73997833AFBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{60A09F65-8A61-4DD7-88EB-73997833AFBF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {530628AB-AA92-4D8A-ADD4-205B2A1DCEE8}
 	EndGlobalSection
 EndGlobal
