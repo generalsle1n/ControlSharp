@@ -15,11 +15,16 @@ WebApplicationBuilder Builder = WebApplication.CreateBuilder(args);
 
 Builder.AddServiceDefaults();
 
-Builder.Services.AddControllers(option =>
-{
-    option.Filters.Add<ApiAuthFilter>();
-});
-
+// Builder.Services.AddControllers(option =>
+// {
+//     foreach (var filterMetadata in option.Filters)
+//     {
+//         Console.WriteLine();
+//     }
+//
+//     option.Filters.Add<ApiAuthFilter>();
+// });
+Builder.Services.AddControllers();
 Builder.Services.AddEndpointsApiExplorer();
 Builder.Services.AddSwaggerGen();
 Builder.Services.AddSignalR();
