@@ -14,8 +14,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\ControlSharp.Api\ControlSharp.Api.csproj" />
       <ProjectReference Include="..\ControlSharp.Mgmt.Service\ControlSharp.Mgmt.Service.csproj" />
-      <ProjectReference Include="..\ControlSharp\ControlSharp.Api.csproj" />
     </ItemGroup>
 
 </Project>
