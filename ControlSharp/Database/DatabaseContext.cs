@@ -1,9 +1,11 @@
 using ControlSharp.Api.Config.Model;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ControlSharp.Api.Config;
 
-public class DatabaseContext : DbContext
+public class DatabaseContext : IdentityDbContext<User>
 {
     public DbSet<Session> Session { get; set; }
     public DbSet<Asset> Asset { get; set; }
