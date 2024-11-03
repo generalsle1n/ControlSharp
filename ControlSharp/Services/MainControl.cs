@@ -40,22 +40,20 @@ public class MainControl : IHostedService
         if (Created)
         {
             _logger.LogInformation("Created Database");
-            User Admin = new User()
-            {
-                Id = Guid.NewGuid(),
-                Created = DateTimeOffset.Now,
-                UserName = _adminName,
-                Password = SecretManager.CreateAdminToken(),
-                Active = true,
-                Role = AccessRole.Admin
-            };
             
-            _context.User.Add(Admin);
-            _context.SaveChanges();
+            User InitialAdmin = new User()
+            {
+                UserName = _adminName,
+                Email = _adminName,
+                Created = DateTime.Now
+            };
+
+            string InitalPassword = SecretManager.CreateAdminToken();
+            await _userManager.CreateAsync(InitialAdmin, InitalPassword);
             
             _logger.LogInformation("Created Admin");
-            _logger.LogInformation($"UserID: {Admin.UserName}");
-            _logger.LogInformation($"Key: {Admin.Password}");
+            _logger.LogInformation($"UserID: {InitialAdmin.Email}");
+            _logger.LogInformation($"Key: {InitalPassword}");
             
         }
         else
