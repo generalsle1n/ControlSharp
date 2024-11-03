@@ -1,4 +1,4 @@
-using ControlSharp.Api.Config.Model;
+using ControlSharp.Api.Database.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

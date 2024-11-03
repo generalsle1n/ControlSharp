@@ -1,6 +1,4 @@
-using ControlSharp.Api.Config;
-using ControlSharp.Api.Config.Model;
-// using ControlSharp.Api.Filter;
+using ControlSharp.Api.Database.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
