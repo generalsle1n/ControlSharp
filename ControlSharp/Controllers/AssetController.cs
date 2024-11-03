@@ -9,7 +9,7 @@ namespace ControlSharp.Controllers;
 [ApiController]
 [Route("api/0.1/[controller]")]
 [Produces("application/json")]
-[MiddlewareFilter<ApiAuthFilter>]
+// [MiddlewareFilter<ApiAuthFilter>]
 public class AssetController : ControllerBase
 {
     private readonly DatabaseContext _context;
@@ -22,6 +22,7 @@ public class AssetController : ControllerBase
     }
     
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<List<Asset>>> GetAllAssets()
     {
         return _context.Asset.ToList();
