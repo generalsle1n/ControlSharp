@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace ControlSharp.Api.Config;
+namespace ControlSharp.Api.Database;
 
 public class DatabaseContext : IdentityDbContext<User, Role, Guid>
 {

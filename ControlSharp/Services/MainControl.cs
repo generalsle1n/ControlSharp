@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
+using ControlSharp.Api.Database;
 using ControlSharp.Api.Database.Model;
 using Microsoft.AspNetCore.Identity;
 
