@@ -12,6 +12,7 @@ public class MainControl : IHostedService
     private readonly IServiceScope _scope;
     private readonly DatabaseContext _context;
     private readonly UserManager<User> _userManager;
+    private readonly RoleManager<Role> _roleManager;
     private readonly ILogger<MainControl> _logger;
     private const string _adminName = "admin@local";
     
@@ -20,6 +21,7 @@ public class MainControl : IHostedService
         _scope = ServiceScopeFactory.CreateScope();
         _context = _scope.ServiceProvider.GetRequiredService<DatabaseContext>();
         _userManager = _scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        _roleManager = _scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
         _logger = Logger;
     }
     
