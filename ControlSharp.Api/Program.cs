@@ -2,6 +2,7 @@ using System.Net.Sockets;
 using System.Reflection;
 using ControlSharp.Api.Database;
 using ControlSharp.Api.Database.Model;
+using ControlSharp.Api.Extension;
 using ControlSharp.Api.Hubs;
 using ControlSharp.Api.Services;
 using Microsoft.AspNetCore.Identity;
@@ -50,6 +51,7 @@ Builder.Services.AddAuthorization(option =>
         policy.RequireRole(AccessRole.Super.ToString());
     });
 });
+
 Builder.Services.AddIdentityApiEndpoints<User>()
     .AddRoles<Role>()
     .AddEntityFrameworkStores<DatabaseContext>();
@@ -58,7 +60,21 @@ Builder.Services.AddHostedService<MainControl>();
 
 var app = Builder.Build();
 
-app.MapIdentityApi<User>();
+MapApiFeatures Feature = new MapApiFeatures()
+{
+    Info = false,
+    Login = true,
+    Manage = false,
+    Refresh = false,
+    Register = false,
+    ConfirmMail = false,
+    ForgotPassword = false,
+    ResetPassword = false,
+    TwoFactor = false,
+    ResendConfirmMail = false,
+};
+
+app.MapIdentityApiRaw<User>(Feature);
 
 app.MapDefaultEndpoints();
 
