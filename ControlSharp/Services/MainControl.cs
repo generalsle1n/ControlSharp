@@ -14,7 +14,9 @@ public class MainControl : IHostedService
     private readonly UserManager<User> _userManager;
     private readonly RoleManager<Role> _roleManager;
     private readonly ILogger<MainControl> _logger;
-    private const string _adminName = "admin@local";
+    private const string _adminName = "admin";
+    private const string _adminDomain = "local";
+    private const string _adminEmail = $"{_adminName}@{_adminDomain}";
     
     public MainControl(IServiceScopeFactory ServiceScopeFactory, ILogger<MainControl> Logger)
     {
