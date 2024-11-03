@@ -18,15 +18,6 @@ WebApplicationBuilder Builder = WebApplication.CreateBuilder(args);
 //For Aspire
 Builder.AddServiceDefaults();
 
-// Builder.Services.AddControllers(option =>
-// {
-//     foreach (var filterMetadata in option.Filters)
-//     {
-//         Console.WriteLine();
-//     }
-//
-//     option.Filters.Add<ApiAuthFilter>();
-// });
 Builder.Services.AddControllers();
 Builder.Services.AddEndpointsApiExplorer();
 Builder.Services.AddSwaggerGen();
