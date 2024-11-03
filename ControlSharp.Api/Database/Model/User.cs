@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace ControlSharp.Api.Config.Model;
+namespace ControlSharp.Api.Database.Model;
 
 public class User : IdentityUser<Guid>
 {

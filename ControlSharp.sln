@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlSharp.Api", "ControlSharp\ControlSharp.Api.csproj", "{AE461E48-7E0C-478D-B4B8-9AA9D3E87220}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlSharp.Api", "ControlSharp.Api\ControlSharp.Api.csproj", "{AE461E48-7E0C-478D-B4B8-9AA9D3E87220}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlSharp.Mgmt", "ControlSharp.Mgmt\ControlSharp.Mgmt.csproj", "{257E572A-BB54-45EF-A388-EBC6BB1337BB}"
 EndProject

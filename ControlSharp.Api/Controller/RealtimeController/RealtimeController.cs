@@ -2,7 +2,7 @@ using ControlSharp.Api.Hubs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
-namespace ControlSharp.Controllers;
+namespace ControlSharp.Api.Controller.RealtimeController;
 
 public class RealtimeController : ControllerBase
 {

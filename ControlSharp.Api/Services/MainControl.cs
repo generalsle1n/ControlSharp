@@ -1,11 +1,11 @@
-using ControlSharp.Api.Config;
-using ControlSharp.Api.Config.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
+using ControlSharp.Api.Database;
+using ControlSharp.Api.Database.Model;
 using Microsoft.AspNetCore.Identity;
 
 
-namespace ControlSharp.Services;
+namespace ControlSharp.Api.Services;
 
 public class MainControl : IHostedService
 {

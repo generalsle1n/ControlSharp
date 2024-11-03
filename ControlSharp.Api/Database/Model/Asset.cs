@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace ControlSharp.Api.Config.Model;
+namespace ControlSharp.Api.Database.Model;
 
 public class Asset
 {

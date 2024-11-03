@@ -1,4 +1,4 @@
-namespace ControlSharp.Api.Config.Model;
+namespace ControlSharp.Api.Database.Model;
 
 public enum AccessRole
 {
