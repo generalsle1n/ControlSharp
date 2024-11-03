@@ -7,6 +7,7 @@ using ControlSharp.Api.Hubs;
 using ControlSharp.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using OpenTelemetry.Logs;
 using Serilog;
 using Serilog.Events;
 
@@ -14,6 +15,7 @@ const string DatabaseConnection = "DefaultConnection";
 
 WebApplicationBuilder Builder = WebApplication.CreateBuilder(args);
 
+//For Aspire
 Builder.AddServiceDefaults();
 
 // Builder.Services.AddControllers(option =>
