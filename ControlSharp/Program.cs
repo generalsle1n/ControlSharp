@@ -5,6 +5,7 @@ using ControlSharp.Api.Config.Model;
 using ControlSharp.Api.Filter;
 using ControlSharp.Api.Hubs;
 using ControlSharp.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
@@ -49,10 +50,27 @@ Builder.Services.AddSerilog(Config =>
     Config.WriteTo.File(path: FolderPath);
 });
 
+Builder.Services.AddAuthorization();
+Builder.Services.AddIdentityApiEndpoints<User>()
+    .AddEntityFrameworkStores<DatabaseContext>();
+
+Builder.Services.Configure<IdentityOptions>(option =>
+{
+    option.Password.RequireDigit = true;
+    option.Password.RequiredLength = 8;
+    option.Password.RequireLowercase = true;
+    option.Password.RequireUppercase = true;
+    option.User.RequireUniqueEmail = true;
+});
+
+Builder.Services.AddHostedService<MainControl>();
+
 var app = Builder.Build();
 
+app.MapIdentityApi<User>();
+
 app.MapDefaultEndpoints();
-app.MapHub<AssetHub>("/api/0.1/assetHub");
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
