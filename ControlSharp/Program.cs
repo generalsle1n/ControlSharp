@@ -30,8 +30,6 @@ Builder.AddServiceDefaults();
 Builder.Services.AddControllers();
 Builder.Services.AddEndpointsApiExplorer();
 Builder.Services.AddSwaggerGen();
-Builder.Services.AddSignalR();
-
 
 string ConnectionData = Builder.Configuration.GetConnectionString(DatabaseConnection);
 
@@ -39,7 +37,6 @@ Builder.Services.AddDbContext<DatabaseContext>(options =>
 {
     options.UseSqlite(ConnectionData);
 });
-Builder.Services.AddHostedService<MainControl>();
 
 Builder.Services.AddSerilog(Config =>
 {
