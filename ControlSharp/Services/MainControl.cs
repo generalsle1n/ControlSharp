@@ -47,13 +47,22 @@ public class MainControl : IHostedService
             
             User InitialAdmin = new User()
             {
-                UserName = _adminName,
-                Email = _adminName,
+                UserName = _adminEmail,
+                Email = _adminEmail,
                 Created = DateTime.Now
             };
-
+            
             string InitalPassword = SecretManager.CreateAdminToken();
             await _userManager.CreateAsync(InitialAdmin, InitalPassword);
+            
+            Role AdminRole = new Role()
+            {
+                Name = AccessRole.Super.ToString()
+            };
+            
+            await _roleManager.CreateAsync(AdminRole);
+            
+            await _userManager.AddToRoleAsync(InitialAdmin, AccessRole.Super.ToString());
             
             _logger.LogInformation("Created Admin");
             _logger.LogInformation($"UserID: {InitialAdmin.Email}");
