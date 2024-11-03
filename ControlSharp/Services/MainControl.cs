@@ -23,10 +23,9 @@ public class MainControl : IHostedService
         _logger = Logger;
     }
     
-    public Task StartAsync(CancellationToken Token)
+    public async Task StartAsync(CancellationToken Token)
     {
-        StartUp(Token);       
-        return Task.CompletedTask;
+        await StartUp(Token);       
     }
 
     public Task StopAsync(CancellationToken Token)
@@ -34,7 +33,7 @@ public class MainControl : IHostedService
         return Task.CompletedTask;
     }
 
-    private void StartUp(CancellationToken Token)
+    private async Task StartUp(CancellationToken Token)
     {
         bool Created = _context.Database.EnsureCreated();
         
