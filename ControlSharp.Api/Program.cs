@@ -1,13 +1,9 @@
-using System.Net.Sockets;
 using System.Reflection;
 using ControlSharp.Api.Database;
 using ControlSharp.Api.Database.Model;
 using ControlSharp.Api.Extension;
-using ControlSharp.Api.Hubs;
 using ControlSharp.Api.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using OpenTelemetry.Logs;
 using Serilog;
 using Serilog.Events;
 
