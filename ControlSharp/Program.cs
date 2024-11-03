@@ -2,7 +2,6 @@ using System.Net.Sockets;
 using System.Reflection;
 using ControlSharp.Api.Config;
 using ControlSharp.Api.Config.Model;
-using ControlSharp.Api.Filter;
 using ControlSharp.Api.Hubs;
 using ControlSharp.Services;
 using Microsoft.AspNetCore.Identity;
@@ -41,17 +40,20 @@ Builder.Services.AddSerilog(Config =>
 });
 
 Builder.Services.AddAuthorization();
-Builder.Services.AddIdentityApiEndpoints<User>()
-    .AddEntityFrameworkStores<DatabaseContext>();
-
-Builder.Services.Configure<IdentityOptions>(option =>
+Builder.Services.AddAuthentication(option =>
 {
-    option.Password.RequireDigit = true;
-    option.Password.RequiredLength = 8;
-    option.Password.RequireLowercase = true;
-    option.Password.RequireUppercase = true;
-    option.User.RequireUniqueEmail = true;
+    
 });
+Builder.Services.AddAuthorization(option =>
+{
+    option.AddPolicy(AccessRole.Super.ToString(), policy =>
+    {
+        policy.RequireRole(AccessRole.Super.ToString());
+    });
+});
+Builder.Services.AddIdentityApiEndpoints<User>()
+    .AddRoles<Role>()
+    .AddEntityFrameworkStores<DatabaseContext>();
 
 Builder.Services.AddHostedService<MainControl>();
 
@@ -70,6 +72,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
