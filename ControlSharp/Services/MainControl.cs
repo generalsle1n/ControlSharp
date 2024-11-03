@@ -2,6 +2,7 @@ using ControlSharp.Api.Config;
 using ControlSharp.Api.Config.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace ControlSharp.Services;
@@ -10,12 +11,15 @@ public class MainControl : IHostedService
 {
     private readonly IServiceScope _scope;
     private readonly DatabaseContext _context;
+    private readonly UserManager<User> _userManager;
     private readonly ILogger<MainControl> _logger;
-    private const string _adminName = "admin";
+    private const string _adminName = "admin@local";
+    
     public MainControl(IServiceScopeFactory ServiceScopeFactory, ILogger<MainControl> Logger)
     {
         _scope = ServiceScopeFactory.CreateScope();
         _context = _scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+        _userManager = _scope.ServiceProvider.GetRequiredService<UserManager<User>>();
         _logger = Logger;
     }
     
