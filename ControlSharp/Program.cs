@@ -39,7 +39,6 @@ Builder.Services.AddSerilog(Config =>
     Config.WriteTo.File(path: FolderPath);
 });
 
-Builder.Services.AddAuthorization();
 Builder.Services.AddAuthentication(option =>
 {
     
