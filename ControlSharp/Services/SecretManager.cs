@@ -1,6 +1,6 @@
 using System.Security.Cryptography;
 
-namespace ControlSharp.Services;
+namespace ControlSharp.Api.Services;
 
 public class SecretManager
 {

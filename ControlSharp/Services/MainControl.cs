@@ -5,7 +5,7 @@ using ControlSharp.Api.Database.Model;
 using Microsoft.AspNetCore.Identity;
 
 
-namespace ControlSharp.Services;
+namespace ControlSharp.Api.Services;
 
 public class MainControl : IHostedService
 {
