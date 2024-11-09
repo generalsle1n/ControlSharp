@@ -2,7 +2,6 @@ using ControlSharp.Database.Identity;
 using ControlSharp.Database.Identity.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using ControlSharp.Ui.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +23,7 @@ builder.Services.AddAuthorization(option =>
     });
 });
 builder.Services.AddDefaultIdentity<User>()
+    .AddSignInManager<SignInManager<User>>()
     .AddRoles<Role>()
     .AddEntityFrameworkStores<DatabaseContext>();
 // builder.Services.AddIdentity<User, Role>().AddEntityFrameworkStores<DatabaseContext>();
@@ -59,6 +59,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-// app.MapRazorPages();
+app.MapRazorPages();
 
 app.Run();
