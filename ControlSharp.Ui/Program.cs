@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddDatabase();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddHttpClient();
 
 builder.Services.AddAuthentication(option =>
 {
@@ -22,6 +23,7 @@ builder.Services.AddAuthorization(option =>
         policy.RequireRole(AccessRole.Super.ToString());
     });
 });
+
 builder.Services.AddDefaultIdentity<User>()
     .AddSignInManager<SignInManager<User>>()
     .AddRoles<Role>()
