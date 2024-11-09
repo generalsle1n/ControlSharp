@@ -1,5 +1,5 @@
-using ControlSharp.Api.Database;
-using ControlSharp.Api.Database.Model;
+using ControlSharp.Database.Identity;
+using ControlSharp.Database.Identity.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
