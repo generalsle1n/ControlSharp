@@ -26,11 +26,11 @@ Builder.Services.AddSerilog(Config =>
     Config.WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Information);
     Config.WriteTo.File(path: FolderPath);
 });
-
 Builder.Services.AddAuthentication(option =>
 {
     
 });
+
 Builder.Services.AddAuthorization(option =>
 {
     option.AddPolicy(AccessRole.Super.ToString(), policy =>
