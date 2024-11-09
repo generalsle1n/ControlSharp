@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using ControlSharp.Database.Identity.Model;
 using Microsoft.AspNetCore.Authorization;
@@ -138,6 +139,28 @@ namespace ControlSharp.Ui.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
+        }
+
+        private async Task<string> LoginIntoApiAsync(string Email, string Password)
+        {
+            HttpClient Client = _clientFactory.CreateClient();
+            
+            string Result = string.Empty;
+            
+            HttpRequestMessage RequestMessage = new HttpRequestMessage(HttpMethod.Post, new Uri("https://localhost:7175/login"));
+            RequestMessage.Content = JsonContent.Create(new InputModel
+            {
+                Email = Email,
+                Password = Password
+            });
+            HttpResponseMessage ResponseMessage = await Client.SendAsync(RequestMessage);
+            
+            if (ResponseMessage.IsSuccessStatusCode)
+            {
+                Result = await ResponseMessage.Content.ReadAsStringAsync();
+            }
+            
+            return Result;
         }
     }
 }
