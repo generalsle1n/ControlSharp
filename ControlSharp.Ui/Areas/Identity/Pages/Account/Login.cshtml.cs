@@ -119,17 +119,21 @@ namespace ControlSharp.Ui.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    string token = await LoginIntoApiAsync(Input.Email, Input.Password);
+                    User Current = await _signInManager.UserManager.FindByEmailAsync(User.Identity.Name);
+                    await _signInManager.UserManager.AddClaimAsync(Current, new Claim("ApiToken", token));
+
                     return LocalRedirect(returnUrl);
                 }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-                }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
-                }
+                // if (result.RequiresTwoFactor)
+                // {
+                //     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                // }
+                // if (result.IsLockedOut)
+                // {
+                //     _logger.LogWarning("User account locked out.");
+                //     return RedirectToPage("./Lockout");
+                // }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
