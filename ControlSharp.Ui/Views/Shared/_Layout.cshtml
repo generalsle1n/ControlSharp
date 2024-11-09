@@ -1,8 +1,4 @@
-﻿@using ControlSharp.Database.Identity.Model
-@using Microsoft.AspNetCore.Identity
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@inject SignInManager<User> SignInManager
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -29,16 +25,10 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
-                    @{
-                        if (true)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Asset" asp-action="Index">Asset</a>
-                            </li>
-                        }
-                    }
+                    <partial name="/Views/Asset/_AssetPartial.cshtml"/>
                 </ul>
                 <partial name="_LoginPartial"/>
+                
             </div>
         </div>
     </nav>
