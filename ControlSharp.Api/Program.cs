@@ -1,12 +1,6 @@
-using System.Net.Sockets;
 using System.Reflection;
-using ControlSharp.Api.Database;
-using ControlSharp.Api.Database.Model;
-using ControlSharp.Api.Hubs;
-using ControlSharp.Api.Services;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using OpenTelemetry.Logs;
+using ControlSharp.Database.Identity;
+using ControlSharp.Database.Identity.Model;
 using Serilog;
 using Serilog.Events;
 
@@ -16,6 +10,7 @@ WebApplicationBuilder Builder = WebApplication.CreateBuilder(args);
 
 //For Aspire
 Builder.AddServiceDefaults();
+Builder.AddDatabase();
 
 Builder.Services.AddControllers();
 Builder.Services.AddEndpointsApiExplorer();
