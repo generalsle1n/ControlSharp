@@ -47,7 +47,7 @@ var app = Builder.Build();
 app.MapIdentityApi<User>();
 
 app.MapDefaultEndpoints();
-
+app.InitializeDatabase();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
