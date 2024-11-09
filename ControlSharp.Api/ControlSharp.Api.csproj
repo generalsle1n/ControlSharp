@@ -31,6 +31,7 @@
 
     <ItemGroup>
       <Folder Include="Filter\" />
+      <Folder Include="Services\" />
     </ItemGroup>
 
 </Project>
