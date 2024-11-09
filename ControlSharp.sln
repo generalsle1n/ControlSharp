@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlSharp.Mgmt.Service",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlSharp.Ui", "ControlSharp.Ui\ControlSharp.Ui.csproj", "{5377C936-B0C9-44D1-80A2-4E8E5727CD12}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlSharp.Database", "ControlSharp.Database\ControlSharp.Database.csproj", "{95610C5F-9A30-4060-8A39-B33562389BB7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{E6A9F5DC-302C-440B-B2C4-FCCB633CD944}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6A9F5DC-302C-440B-B2C4-FCCB633CD944}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6A9F5DC-302C-440B-B2C4-FCCB633CD944}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95610C5F-9A30-4060-8A39-B33562389BB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95610C5F-9A30-4060-8A39-B33562389BB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95610C5F-9A30-4060-8A39-B33562389BB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95610C5F-9A30-4060-8A39-B33562389BB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
