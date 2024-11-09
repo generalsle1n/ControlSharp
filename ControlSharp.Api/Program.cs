@@ -16,13 +16,6 @@ Builder.Services.AddControllers();
 Builder.Services.AddEndpointsApiExplorer();
 Builder.Services.AddSwaggerGen();
 
-string ConnectionData = Builder.Configuration.GetConnectionString(DatabaseConnection);
-
-Builder.Services.AddDbContext<DatabaseContext>(options =>
-{
-    options.UseSqlite(ConnectionData);
-});
-
 Builder.Services.AddSerilog(Config =>
 {
     string FilePath = Assembly.GetExecutingAssembly().Location;
@@ -48,8 +41,6 @@ Builder.Services.AddAuthorization(option =>
 Builder.Services.AddIdentityApiEndpoints<User>()
     .AddRoles<Role>()
     .AddEntityFrameworkStores<DatabaseContext>();
-
-Builder.Services.AddHostedService<MainControl>();
 
 var app = Builder.Build();
 
