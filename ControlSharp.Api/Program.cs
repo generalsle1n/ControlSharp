@@ -1,6 +1,7 @@
 using System.Reflection;
 using ControlSharp.Database.Identity;
 using ControlSharp.Database.Identity.Model;
+using Microsoft.AspNetCore.Identity;
 using Serilog;
 using Serilog.Events;
 
@@ -39,6 +40,7 @@ Builder.Services.AddAuthorization(option =>
     });
 });
 Builder.Services.AddIdentityApiEndpoints<User>()
+    .AddSignInManager<SignInManager<User>>()
     .AddRoles<Role>()
     .AddEntityFrameworkStores<DatabaseContext>();
 
