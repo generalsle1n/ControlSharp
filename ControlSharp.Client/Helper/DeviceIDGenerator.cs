@@ -13,7 +13,19 @@ public class DeviceIDGenerator
         {
             byte[] hostnameData = Encoding.UTF8.GetBytes(hostname);
             byte[] hash = Hasher.ComputeHash(hostnameData);
-            return Encoding.UTF8.GetString(hash);
+            
+            StringBuilder Data = new StringBuilder();
+            
+            for (int i = 0; i < hash.Length; i++)
+            {
+                Data.Append($"{hash[i]:X2}");
+                if ((i % 4) == 3)
+                {
+                    Data.Append(" ");
+                }
+            }
+            
+            return Data.ToString();
         }
     }
 }
