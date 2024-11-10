@@ -10,4 +10,6 @@ public class Asset
     public DateTimeOffset? LastOnline { get; set; }
     public string? Ip { get; set; }
     public bool? Active { get; set; }
+    public string? Hash { get; set; }
+    public bool? Registerd { get; set; }
 }
