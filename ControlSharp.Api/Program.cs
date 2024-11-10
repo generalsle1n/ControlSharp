@@ -20,6 +20,11 @@ Builder.Services.AddSwaggerGen();
 Builder.Services.AddSignalR()
     .AddMessagePackProtocol();
 
+Builder.Configuration.AddInMemoryCollection(new List<KeyValuePair<string, string?>>()
+{
+    new KeyValuePair<string, string?>("AssetHubId", $"{Guid.NewGuid()}{Guid.NewGuid()}")
+});
+
 Builder.Services.AddSerilog(Config =>
 {
     string FilePath = Assembly.GetExecutingAssembly().Location;
@@ -65,7 +70,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapHub<AssetHub>("/asset");
+app.MapHub<QuarantineAssetHub>("/asset");
+app.MapHub<RegisteredAssetHub>($"/{app.Configuration.GetValue<string>("AssetHubId")}");
 
 app.MapControllers();
 
