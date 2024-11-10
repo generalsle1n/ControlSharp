@@ -166,5 +166,31 @@ namespace ControlSharp.Ui.Areas.Identity.Pages.Account
             
             return Result;
         }
+
+        private async Task AddApiIdentiyToUserClaimAsync(InputModel input, ApiIdentity apiIdentity)
+        {
+            _logger.LogDebug($"Search User in Manager: {Input.Email}");
+            User User = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+
+            await RemoveSingleClaimByTypeAsync(User, UserClaimHelper.ApiClaimId);
+            
+            string SerializedData = JsonSerializer.Serialize(apiIdentity);
+            Claim Claim = new Claim(UserClaimHelper.ApiClaimId, SerializedData);
+            await _signInManager.UserManager.AddClaimAsync(User, Claim);
+        }
+
+        private async Task RemoveSingleClaimByTypeAsync(User user, string type)
+        {
+            _logger.LogInformation($"Removing Claim from User: {user.Email}");
+            _logger.LogDebug($"Searching all Claims from User: {user.Email}");
+            IList<Claim> AllClaims = await _signInManager.UserManager.GetClaimsAsync(user);
+
+            IEnumerable<Claim> Result = AllClaims.Where(claim => claim.Type.Equals(type));
+            foreach (Claim Claim in Result)
+            {
+                _logger.LogDebug($"Removing Single Claim {Claim.Type} from User: {user.Email}");
+                await _signInManager.UserManager.RemoveClaimAsync(user, Claim);
+            }
+        }
     }
 }
