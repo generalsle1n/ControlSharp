@@ -3,13 +3,13 @@ using Microsoft.Extensions.Hosting;
 
 namespace ControlSharp.Client.Worker;
 
-public class SingalRWorker : IHostedService
+public class SignalRWorker : IHostedService
 {
-    private readonly ILogger<SingalRWorker> _logger;
+    private readonly ILogger<SignalRWorker> _logger;
     private readonly IConfiguration _configuration;
     private readonly HubConnection _assetHub;
 
-    public SingalRWorker(ILogger<SingalRWorker> logger, IConfiguration configuration)
+    public SignalRWorker(ILogger<SignalRWorker> logger, IConfiguration configuration)
     {
         _logger = logger;
         _configuration = configuration;
