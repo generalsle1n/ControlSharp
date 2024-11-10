@@ -26,7 +26,7 @@ public class AssetController : ControllerBase
     [Authorize(Policy  = nameof(AccessRole.Super))]
     public async Task<ActionResult<List<Asset>>> GetAllAssets()
     {
-        return new List<Asset>();
+        return _context.Asset.ToList();
     }
     
     [HttpPost]
