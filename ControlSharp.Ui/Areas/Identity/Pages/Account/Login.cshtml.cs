@@ -157,7 +157,7 @@ namespace ControlSharp.Ui.Areas.Identity.Pages.Account
             
             ApiIdentity Result = null;
             
-            HttpRequestMessage RequestMessage = new HttpRequestMessage(HttpMethod.Post, new Uri("https://localhost:7175/login"));
+            HttpRequestMessage RequestMessage = new HttpRequestMessage(HttpMethod.Post, new Uri("https://ControlSharp-Api/login"));
             RequestMessage.Content = JsonContent.Create(Input);
             HttpResponseMessage ResponseMessage = await Client.SendAsync(RequestMessage);
             

@@ -25,7 +25,7 @@ public class AssetController : Controller
     public async Task<IActionResult> Asset()
     {
         HttpClient Client = _httpClientFactory.CreateClient();
-        HttpRequestMessage Request = await HttpRequestHelper.CreateRequestMessageWithApiAuthAsync("https://localhost:7175/api/0.1/Asset", HttpMethod.Get, User.Identity.Name, _signInManager);
+        HttpRequestMessage Request = await HttpRequestHelper.CreateRequestMessageWithApiAuthAsync("https://ControlSharp-Api/api/0.1/Asset", HttpMethod.Get, User.Identity.Name, _signInManager);
         HttpResponseMessage Response = await Client.SendAsync(Request);
         
         List<Database.Identity.Model.Asset> Result = null;
