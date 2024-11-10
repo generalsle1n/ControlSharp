@@ -9,7 +9,7 @@ IHost HostingService = Host.CreateDefaultBuilder(args)
     })
     .ConfigureServices(services =>
     {
-        services.AddHostedService<SingalRWorker>();
+        services.AddHostedService<SignalRWorker>();
         services.AddHttpClient();
     })
     .ConfigureLogging(config =>
