@@ -6,8 +6,15 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
-            <a alig class="nav-link text-dark" asp-area="" asp-controller="Asset" asp-action="Asset">Asset</a>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                Assets
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" asp-area="" asp-controller="Asset" asp-action="Asset">Registerd</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Discovered</a>
+            </div>
         </li>
     }
     else
