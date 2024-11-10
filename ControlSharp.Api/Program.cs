@@ -1,4 +1,5 @@
 using System.Reflection;
+using ControlSharp.Api.Hubs;
 using ControlSharp.Database.Identity;
 using ControlSharp.Database.Identity.Model;
 using Microsoft.AspNetCore.Identity;
@@ -16,6 +17,8 @@ Builder.AddDatabase();
 Builder.Services.AddControllers();
 Builder.Services.AddEndpointsApiExplorer();
 Builder.Services.AddSwaggerGen();
+Builder.Services.AddSignalR()
+    .AddMessagePackProtocol();
 
 Builder.Services.AddSerilog(Config =>
 {
@@ -61,6 +64,8 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHub<AssetHub>("/asset");
 
 app.MapControllers();
 
