@@ -29,6 +29,16 @@ public class AssetController : ControllerBase
         return _context.Asset.ToList();
     }
     
+    [HttpGet]
+    [Authorize(Policy  = nameof(AccessRole.Super))]
+    [Route("/api/v0.1/Asset/UnregisterdAsset")]
+    public async Task<ActionResult<List<Asset>>> GetAllUnregisterd()
+    {
+        return _context.Asset.Where(asset => asset.Registered == false).ToList();
+    }
+    
+    
+    
     [HttpPost]
     [Authorize(Policy = nameof(AccessRole.Super))]
     public async Task<ActionResult> CreateNewAsset(Asset asset, CancellationToken token)
