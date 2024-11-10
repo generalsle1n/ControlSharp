@@ -28,18 +28,13 @@ builder.Services.AddDefaultIdentity<User>()
     .AddSignInManager<SignInManager<User>>()
     .AddRoles<Role>()
     .AddEntityFrameworkStores<DatabaseContext>();
-// builder.Services.AddIdentity<User, Role>().AddEntityFrameworkStores<DatabaseContext>();
-// builder.Services.AddIdentityApiEndpoints<User>()
-//     .AddRoles<Role>()
-//     .AddEntityFrameworkStores<DatabaseContext>();
-
 
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 app.MapIdentityApi<User>();
 app.InitializeDatabase();
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
