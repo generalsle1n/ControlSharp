@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.SignalR;
 namespace ControlSharp.Api.Hubs;
 
 [Authorize]
-public class AssetHub : Hub
+public class RegisteredAssetHub : Hub<IRegisteredAssetClient>
 {
-    public async Task SendMessageToAll(string message)
+    public async Task SendMessageToAllaaaa(string message)
     {
-        await Clients.All.SendAsync("cool", message);
+        await Clients.All.ExecuteBinary(message);
     }
     
 
