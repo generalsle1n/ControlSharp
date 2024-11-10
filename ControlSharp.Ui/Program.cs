@@ -7,8 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.AddDatabase();
+//Aspire
+builder.AddServiceDefaults();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddHttpClient();
 
 builder.Services.AddAuthentication(option =>
 {
@@ -22,22 +25,19 @@ builder.Services.AddAuthorization(option =>
         policy.RequireRole(AccessRole.Super.ToString());
     });
 });
+
 builder.Services.AddDefaultIdentity<User>()
     .AddSignInManager<SignInManager<User>>()
     .AddRoles<Role>()
     .AddEntityFrameworkStores<DatabaseContext>();
-// builder.Services.AddIdentity<User, Role>().AddEntityFrameworkStores<DatabaseContext>();
-// builder.Services.AddIdentityApiEndpoints<User>()
-//     .AddRoles<Role>()
-//     .AddEntityFrameworkStores<DatabaseContext>();
-
 
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 app.MapIdentityApi<User>();
 app.InitializeDatabase();
-// Configure the HTTP request pipeline.
+//Aspire
+app.MapDefaultEndpoints();
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();

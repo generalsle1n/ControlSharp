@@ -26,36 +26,24 @@ public class AssetController : ControllerBase
     [Authorize(Policy  = nameof(AccessRole.Super))]
     public async Task<ActionResult<List<Asset>>> GetAllAssets()
     {
-        return new List<Asset>();
+        return _context.Asset.ToList();
     }
     
     [HttpPost]
+    [Authorize(Policy = nameof(AccessRole.Super))]
     public async Task<ActionResult> CreateNewAsset(Asset asset, CancellationToken token)
     {
-        // AccessRole Role = (HttpContext.Items["ApiKey"] as ApiKey).Role;
-        //
-        // if (Role == AccessRole.Admin)
-        // {
-        //     bool Result = true;
-        //     try
-        //     {
-        //         _context.Asset.Add(asset);
-        //         await _context.SaveChangesAsync(token);
-        //
-        //         return new OkResult();
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         Result = false;
-        //         return new BadRequestObjectResult(e);
-        //     }
-        // }
-        // else
-        // {
-        //     return new UnauthorizedResult();
-        // }
-        //
-        //
-        return Ok();
+        try
+        {
+            _context.Asset.Add(asset);
+            await _context.SaveChangesAsync(token);
+            
+            return new OkResult();
+        }
+        catch (Exception e)
+        {
+            return new BadRequestObjectResult(e);
+        }
+            
     }
 }
