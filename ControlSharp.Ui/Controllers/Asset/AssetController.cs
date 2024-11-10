@@ -36,4 +36,18 @@ public class AssetController : Controller
         
         return View(Result);
     }
+    public async Task<IActionResult> QuarantineAsset()
+    {
+        HttpClient Client = _httpClientFactory.CreateClient();
+        HttpRequestMessage Request = await HttpRequestHelper.CreateRequestMessageWithApiAuthAsync("https://ControlSharp-Api/api/v0.1/Asset/UnregisterdAsset", HttpMethod.Get, User.Identity.Name, _signInManager);
+        HttpResponseMessage Response = await Client.SendAsync(Request);
+        
+        List<Database.Identity.Model.Asset> Result = null;
+        if (Response.IsSuccessStatusCode)
+        {
+            Result = await Response.Content.ReadFromJsonAsync<List<Database.Identity.Model.Asset>>();
+        }
+        
+        return View(Result);
+    }
 }
