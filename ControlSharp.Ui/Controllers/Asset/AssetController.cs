@@ -1,6 +1,10 @@
 using System.ComponentModel;
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Text.Json;
 using ControlSharp.Database.Identity.Model;
 using ControlSharp.Ui.Helper;
+using ControlSharp.Ui.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +24,16 @@ public class AssetController : Controller
     
     public async Task<IActionResult> Asset()
     {
-        return View();
+        HttpClient Client = _httpClientFactory.CreateClient();
+        HttpRequestMessage Request = await HttpRequestHelper.CreateRequestMessageWithApiAuthAsync("https://localhost:7175/api/0.1/Asset", HttpMethod.Get, User.Identity.Name, _signInManager);
+        HttpResponseMessage Response = await Client.SendAsync(Request);
+        
+        List<Database.Identity.Model.Asset> Result = null;
+        if (Response.IsSuccessStatusCode)
+        {
+            Result = await Response.Content.ReadFromJsonAsync<List<Database.Identity.Model.Asset>>();
+        }
+        
+        return View(Result);
     }
 }
