@@ -7,8 +7,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.Json;
 using System.Threading.Tasks;
 using ControlSharp.Database.Identity.Model;
+using ControlSharp.Ui.Helper;
+using ControlSharp.Ui.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -118,22 +121,25 @@ namespace ControlSharp.Ui.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
-                    string token = await LoginIntoApiAsync(Input.Email, Input.Password);
-                    User Current = await _signInManager.UserManager.FindByEmailAsync(User.Identity.Name);
-                    await _signInManager.UserManager.AddClaimAsync(Current, new Claim("ApiToken", token));
+                    _logger.LogInformation("User logged in Ui.");
+                    ApiIdentity Token = await LoginIntoApiAsync(Input);
+                    if (Token.Success)
+                    {
+                        await AddApiIdentiyToUserClaimAsync(Input, Token);
+                    }
+                    
 
                     return LocalRedirect(returnUrl);
                 }
-                // if (result.RequiresTwoFactor)
-                // {
-                //     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-                // }
-                // if (result.IsLockedOut)
-                // {
-                //     _logger.LogWarning("User account locked out.");
-                //     return RedirectToPage("./Lockout");
-                // }
+                if (result.RequiresTwoFactor)
+                {
+                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                }
+                if (result.IsLockedOut)
+                {
+                    _logger.LogWarning("User account locked out.");
+                    return RedirectToPage("./Lockout");
+                }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
@@ -145,23 +151,25 @@ namespace ControlSharp.Ui.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private async Task<string> LoginIntoApiAsync(string Email, string Password)
+        private async Task<ApiIdentity> LoginIntoApiAsync(InputModel input)
         {
             HttpClient Client = _clientFactory.CreateClient();
             
-            string Result = string.Empty;
+            ApiIdentity Result = null;
             
             HttpRequestMessage RequestMessage = new HttpRequestMessage(HttpMethod.Post, new Uri("https://localhost:7175/login"));
-            RequestMessage.Content = JsonContent.Create(new InputModel
-            {
-                Email = Email,
-                Password = Password
-            });
+            RequestMessage.Content = JsonContent.Create(Input);
             HttpResponseMessage ResponseMessage = await Client.SendAsync(RequestMessage);
             
             if (ResponseMessage.IsSuccessStatusCode)
             {
-                Result = await ResponseMessage.Content.ReadAsStringAsync();
+                Result = await ResponseMessage.Content.ReadFromJsonAsync<ApiIdentity>();
+                Result.Success = true;
+                _logger.LogInformation("Gather Api Token successfully.");
+            }
+            else
+            {
+                _logger.LogError("Gather Api Token failed.");
             }
             
             return Result;
