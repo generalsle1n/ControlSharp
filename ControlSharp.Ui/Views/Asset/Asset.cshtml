@@ -1,5 +1,34 @@
+@using System.Text
+@using ControlSharp.Database.Identity.Model
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject IHttpClientFactory ClientFactory
+@model IEnumerable<Asset>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Assets";
 }
 
-<b>This is an View</b>
+<table class="table table-striped table-hover">
+    <thead class="">
+        <tr>
+            <th>Name</th>
+            <th>Active</th>
+            <th>LastOnline</th>
+            <th>IP</th>
+            <th>Created</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (Asset SingleAsset in Model)
+    {
+        <tr>
+            <td>@SingleAsset.Name</td>
+            <td>@SingleAsset.Active</td>
+            <td>@SingleAsset.LastOnline</td>
+            <td>@SingleAsset.Ip</td>
+            <td>@SingleAsset.Created</td> 
+        </tr>
+    }
+    </tbody>
+</table>
