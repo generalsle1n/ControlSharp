@@ -18,9 +18,6 @@ public class DatabaseContext : IdentityDbContext<User, Role, Guid>
         _logger = Logger;
     }
 
-    public async Task CheckDatabaseAsync(UserManager<User> userManager, RoleManager<Role> roleManager)
-    {
-        bool Created = await Database.EnsureCreatedAsync();
     public async Task CheckDatabaseAsync(UserManager<User> userManager, RoleManager<Role> roleManager, bool CreateDatabase)
     {
         if (CreateDatabase)
