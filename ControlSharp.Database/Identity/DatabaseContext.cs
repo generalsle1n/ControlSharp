@@ -21,17 +21,23 @@ public class DatabaseContext : IdentityDbContext<User, Role, Guid>
     public async Task CheckDatabaseAsync(UserManager<User> userManager, RoleManager<Role> roleManager)
     {
         bool Created = await Database.EnsureCreatedAsync();
+    public async Task CheckDatabaseAsync(UserManager<User> userManager, RoleManager<Role> roleManager, bool CreateDatabase)
+    {
+        if (CreateDatabase)
+        {
+            bool Created = await Database.EnsureCreatedAsync();
 
-        if (Created)
-        {
-            _logger.LogInformation($"Created Database: {Database.GetConnectionString()}");
-            User User = await CreateUserAsync(userManager);
-            Role Role = await CreateRoleAsync(roleManager);
-            await AddUserToRoleAsync(userManager, roleManager, User, Role);
-        }
-        else
-        {
-            _logger.LogInformation($"Database already exists: {Database.GetConnectionString()}");
+            if (Created)
+            {
+                _logger.LogInformation($"Created Database: {Database.GetConnectionString()}");
+                User User = await CreateUserAsync(userManager);
+                Role Role = await CreateRoleAsync(roleManager);
+                await AddUserToRoleAsync(userManager, roleManager, User, Role);
+            }
+            else
+            {
+                _logger.LogInformation($"Database already exists: {Database.GetConnectionString()}");
+            }   
         }
     }
 
