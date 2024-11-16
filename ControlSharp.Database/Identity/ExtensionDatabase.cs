@@ -21,7 +21,7 @@ public static class ExtensionDatabase
         return builder;
     }
 
-    public static WebApplication InitializeDatabase(this WebApplication app, bool CreateDatabase)
+    public static WebApplication InitializeDatabase(this WebApplication app, bool CreateDatabase = false)
     {
         IServiceScope Scope = app.Services.CreateScope();
         DatabaseContext Context = Scope.ServiceProvider.GetRequiredService<DatabaseContext>();
