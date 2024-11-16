@@ -8,6 +8,7 @@ IResourceBuilder<ProjectResource> ControlApi = builder.AddProject<ControlSharp_A
 
 builder.AddProject<ControlSharp_Ui>("ControlSharp-Ui")
     .WithReplicas(builder.Configuration.GetValue<int>("Replicas"))
-    .WithReference(ControlApi);
+    .WithReference(ControlApi)
+    .WaitFor(ControlApi);
 
 builder.Build().Run();
