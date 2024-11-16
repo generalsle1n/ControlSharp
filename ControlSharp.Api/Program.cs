@@ -17,16 +17,16 @@ Builder.Services.AddControllers();
 Builder.Services.AddEndpointsApiExplorer();
 Builder.Services.AddSwaggerGen();
 
-Builder.Services.AddSerilog(Config =>
-{
-    string FilePath = Assembly.GetExecutingAssembly().Location;
-    string FolderPath = $@"{Path.GetDirectoryName(FilePath)}\Log.txt";
-
-    Config.MinimumLevel.Debug();
-    
-    Config.WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Information);
-    Config.WriteTo.File(path: FolderPath);
-});
+// Builder.Services.AddSerilog(Config =>
+// {
+//     string FilePath = Assembly.GetExecutingAssembly().Location;
+//     string FolderPath = $@"{Path.GetDirectoryName(FilePath)}\Log.txt";
+//
+//     Config.MinimumLevel.Debug();
+//     
+//     Config.WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Information);
+//     Config.WriteTo.File(path: FolderPath);
+// });
 Builder.Services.AddAuthentication(option =>
 {
     
