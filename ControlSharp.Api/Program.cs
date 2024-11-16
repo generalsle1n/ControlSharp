@@ -49,7 +49,7 @@ var app = Builder.Build();
 app.MapIdentityApi<User>();
 
 app.MapDefaultEndpoints();
-app.InitializeDatabase();
+app.InitializeDatabase(CreateDatabase: true);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
