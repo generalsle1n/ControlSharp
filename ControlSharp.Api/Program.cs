@@ -70,7 +70,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapHub<QuarantineAssetHub>("/asset");
+app.MapHub<QuarantineAssetHub>("/login");
 app.MapHub<RegisteredAssetHub>($"/{app.Configuration.GetValue<string>("AssetHubId")}");
 
 app.MapControllers();

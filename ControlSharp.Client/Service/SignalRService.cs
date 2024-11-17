@@ -23,10 +23,7 @@ public class SignalRWorker : IHostedService
     {
         string Server = _configuration.GetValue<string>("url");
         _assetHub = new HubConnectionBuilder()
-            .WithUrl($"{Server}/asset", config =>
-            {
-                
-            })
+            .WithUrl($"{Server}/login")
             .AddMessagePackProtocol()
             .Build();
         
