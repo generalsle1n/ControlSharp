@@ -46,5 +46,37 @@ public class SignalRService : BackgroundService
     public async Task StopAsync(CancellationToken cancellationToken)
     {
         
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        await WaitForConnection(stoppingToken);
+        await _assetHub.InvokeAsync("Register", await DeviceIDGenerator.GenerateAsync(), Dns.GetHostName(), stoppingToken);
+        while (!stoppingToken.IsCancellationRequested)
+        {
+            
+            if (_logger.IsEnabled(LogLevel.Information))
+            {
+                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+            }
+
+            await Task.Delay(TimeOut, stoppingToken);
+        }
+    }
+
+    private async Task WaitForConnection(CancellationToken cancellationToken)
+    {
+        bool Connected = false;
+        while (Connected == false && cancellationToken.IsCancellationRequested == false)
+        {
+            try
+            {
+                await _assetHub.StartAsync(cancellationToken);
+                Connected = true;
+                break;
+            }
+            catch (HttpRequestException e)
+            {
+                await Task.Delay(TimeOut, cancellationToken);
+            }
+        }
     }
 }
