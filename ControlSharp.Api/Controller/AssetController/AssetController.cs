@@ -37,22 +37,22 @@ public class AssetController : ControllerBase
     {
         return _context.Asset.Where(asset => asset.Registered == false).ToList();
     }
-    
+
     [HttpPost]
     [Authorize(Policy = nameof(AccessRole.Super))]
-    public async Task<ActionResult> CreateNewAsset(Asset asset, CancellationToken token)
+    [Route("[action]")]
+    public async Task<ActionResult> RegisterAsset(Asset asset, CancellationToken token)
     {
         try
         {
-            _context.Asset.Add(asset);
+            asset.Registered = true;
+            _context.Asset.Update(asset);
             await _context.SaveChangesAsync(token);
-            
-            return new OkResult();
+            return Ok();
         }
         catch (Exception e)
         {
             return new BadRequestObjectResult(e);
         }
-            
     }
 }
