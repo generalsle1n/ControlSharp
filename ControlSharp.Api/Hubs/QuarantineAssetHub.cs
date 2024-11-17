@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace ControlSharp.Api.Hubs;
 
-public class QuarantineAssetHub : Hub<IQuarantineAssetHub>
+public class QuarantineAssetHub : Hub<IQuarantineAssetAction>
 {
     private readonly ILogger<QuarantineAssetHub> _logger;
     private readonly IConfiguration _configuration;

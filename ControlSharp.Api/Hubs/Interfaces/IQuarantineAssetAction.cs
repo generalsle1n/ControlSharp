@@ -1,6 +1,6 @@
 ﻿namespace ControlSharp.Api.Hubs.Interfaces;
 
-public interface IQuarantineAssetHub
+public interface IQuarantineAssetAction
 {
     public Task CreateConnectingToMain(string connectionId);
 }
