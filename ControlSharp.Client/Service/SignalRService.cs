@@ -22,7 +22,7 @@ public class SignalRService : BackgroundService
     
     private void ConfigureHub()
     {
-        string Server = _configuration.GetValue<string>("url");
+        string Server = _configuration.GetValue<string>("server");
         _assetHub = new HubConnectionBuilder()
             .WithUrl($"{Server}/login")
             .AddMessagePackProtocol()
