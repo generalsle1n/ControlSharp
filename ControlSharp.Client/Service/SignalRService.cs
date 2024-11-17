@@ -31,21 +31,8 @@ public class SignalRService : BackgroundService
         {
             _logger.LogInformation(message);
         });
-    } 
-    
-    public async Task StartAsync(CancellationToken cancellationToken)
-    {      
-        await _assetHub.StartAsync(cancellationToken);
-        await _assetHub.InvokeAsync("Register", await DeviceIDGenerator.GenerateAsync(), Dns.GetHostName(), cancellationToken);
-        while (true)
-        {
-            await Task.Delay(3000, cancellationToken);
-        }
     }
 
-    public async Task StopAsync(CancellationToken cancellationToken)
-    {
-        
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         await WaitForConnection(stoppingToken);
