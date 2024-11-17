@@ -70,8 +70,15 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapHub<QuarantineAssetHub>("/login");
-app.MapHub<RegisteredAssetHub>($"/{app.Configuration.GetValue<string>("AssetHubId")}");
+app.MapHub<QuarantineAssetHub>("/login", config =>
+{
+    config.AllowStatefulReconnects = true;
+});
+app.MapHub<RegisteredAssetHub>($"/{app.Configuration.GetValue<string>("AssetHubId")}", config =>
+{
+    config.AllowStatefulReconnects = true;
+    config.CloseOnAuthenticationExpiration = true;
+});
 
 app.MapControllers();
 
