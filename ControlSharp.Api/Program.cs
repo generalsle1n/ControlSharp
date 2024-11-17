@@ -20,16 +20,21 @@ Builder.Services.AddSwaggerGen();
 Builder.Services.AddSignalR()
     .AddMessagePackProtocol();
 
-Builder.Services.AddSerilog(Config =>
+Builder.Configuration.AddInMemoryCollection(new List<KeyValuePair<string, string?>>()
 {
-    string FilePath = Assembly.GetExecutingAssembly().Location;
-    string FolderPath = $@"{Path.GetDirectoryName(FilePath)}\Log.txt";
-
-    Config.MinimumLevel.Debug();
-    
-    Config.WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Information);
-    Config.WriteTo.File(path: FolderPath);
+    new KeyValuePair<string, string?>("AssetHubId", $"{Guid.NewGuid()}{Guid.NewGuid()}")
 });
+
+// Builder.Services.AddSerilog(Config =>
+// {
+//     string FilePath = Assembly.GetExecutingAssembly().Location;
+//     string FolderPath = $@"{Path.GetDirectoryName(FilePath)}\Log.txt";
+//
+//     Config.MinimumLevel.Debug();
+//     
+//     Config.WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Information);
+//     Config.WriteTo.File(path: FolderPath);
+// });
 Builder.Services.AddAuthentication(option =>
 {
     
@@ -52,7 +57,7 @@ var app = Builder.Build();
 app.MapIdentityApi<User>();
 
 app.MapDefaultEndpoints();
-app.InitializeDatabase();
+app.InitializeDatabase(CreateDatabase: true);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -65,7 +70,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapHub<AssetHub>("/asset");
+app.MapHub<QuarantineAssetHub>("/asset");
+app.MapHub<RegisteredAssetHub>($"/{app.Configuration.GetValue<string>("AssetHubId")}");
 
 app.MapControllers();
 
