@@ -11,4 +11,9 @@ IResourceBuilder<ProjectResource> ControlUi = builder.AddProject<ControlSharp_Ui
     .WithReference(ControlApi)
     .WaitFor(ControlApi);
 
-builder.Build().Run();
+builder.AddProject<ControlSharp_Client>("ControlSharp-Client")
+    .WaitFor(ControlUi)
+    .WithEnvironment("url", ControlApi.GetEndpoint("https"));
+
+DistributedApplication app = builder.Build();
+await app.RunAsync();
