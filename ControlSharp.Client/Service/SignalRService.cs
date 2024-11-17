@@ -11,6 +11,7 @@ public class SignalRService : BackgroundService
     private readonly IConfiguration _configuration;
     private HubConnection _assetHub;
     private const int TimeOut = 1000;
+    private const int BufferSize = 1024;
 
     public SignalRService(ILogger<SignalRService> logger, IConfiguration configuration)
     {
@@ -23,10 +24,19 @@ public class SignalRService : BackgroundService
     private void ConfigureHub()
     {
         string Server = _configuration.GetValue<string>("server");
-        _assetHub = new HubConnectionBuilder()
+        IHubConnectionBuilder AssetHubBuilder = new HubConnectionBuilder()
             .WithUrl($"{Server}/login")
             .AddMessagePackProtocol()
-            .Build();
+            .WithKeepAliveInterval(TimeSpan.FromSeconds(30))
+            .WithStatefulReconnect()
+            .WithAutomaticReconnect();
+        
+        AssetHubBuilder.Services.Configure<HubConnectionOptions>(config =>
+        {
+            config.StatefulReconnectBufferSize = BufferSize;
+        });
+        
+        _assetHub = AssetHubBuilder.Build();
         
         _assetHub.On("ExecuteBinary", (string message) =>
         {
