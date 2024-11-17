@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ControlSharp.Api.Controller.AssetController;
 
 [ApiController]
-[Route("api/0.1/[controller]")]
+[Route("api/v0.1/[controller]")]
 [Produces("application/json")]
 // [MiddlewareFilter<ApiAuthFilter>]
 public class AssetController : ControllerBase
@@ -24,20 +24,19 @@ public class AssetController : ControllerBase
     
     [HttpGet]
     [Authorize(Policy  = nameof(AccessRole.Super))]
-    public async Task<ActionResult<List<Asset>>> GetAllAssets()
+    [Route("[action]")]
+    public async Task<ActionResult<List<Asset>>> Registered()
     {
         return _context.Asset.Where(asset => asset.Registered == true).ToList();
     }
     
     [HttpGet]
     [Authorize(Policy  = nameof(AccessRole.Super))]
-    [Route("/api/v0.1/Asset/UnregisterdAsset")]
-    public async Task<ActionResult<List<Asset>>> GetAllUnregisterd()
+    [Route("[action]")]
+    public async Task<ActionResult<List<Asset>>> Unregistered()
     {
         return _context.Asset.Where(asset => asset.Registered == false).ToList();
     }
-    
-    
     
     [HttpPost]
     [Authorize(Policy = nameof(AccessRole.Super))]
