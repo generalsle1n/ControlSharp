@@ -22,7 +22,7 @@ public class AssetController : Controller
         _signInManager = signInManager;
     }
     
-    public async Task<IActionResult> Asset()
+    public async Task<IActionResult> Registered()
     {
         HttpClient Client = _httpClientFactory.CreateClient();
         HttpRequestMessage Request = await HttpRequestHelper.CreateRequestMessageWithApiAuthAsync("https://ControlSharp-Api/api/v0.1/Asset/Registered", HttpMethod.Get, User.Identity.Name, _signInManager);
@@ -36,7 +36,7 @@ public class AssetController : Controller
         
         return View(Result);
     }
-    public async Task<IActionResult> QuarantineAsset()
+    public async Task<IActionResult> Quarantine()
     {
         HttpClient Client = _httpClientFactory.CreateClient();
         HttpRequestMessage Request = await HttpRequestHelper.CreateRequestMessageWithApiAuthAsync("https://ControlSharp-Api/api/v0.1/Asset/UnregisterdAsset", HttpMethod.Get, User.Identity.Name, _signInManager);
