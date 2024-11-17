@@ -3,15 +3,15 @@ using ControlSharp.Client.Helper;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Hosting;
 
-namespace ControlSharp.Client.Worker;
+namespace ControlSharp.Client.Service;
 
-public class SignalRWorker : IHostedService
+public class SignalRService : BackgroundService
 {
-    private readonly ILogger<SignalRWorker> _logger;
+    private readonly ILogger<SignalRService> _logger;
     private readonly IConfiguration _configuration;
     private HubConnection _assetHub;
 
-    public SignalRWorker(ILogger<SignalRWorker> logger, IConfiguration configuration)
+    public SignalRService(ILogger<SignalRService> logger, IConfiguration configuration)
     {
         _logger = logger;
         _configuration = configuration;

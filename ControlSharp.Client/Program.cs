@@ -1,4 +1,4 @@
-﻿using ControlSharp.Client.Worker;
+﻿using ControlSharp.Client.Service;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -9,7 +9,7 @@ IHost HostingService = Host.CreateDefaultBuilder(args)
     })
     .ConfigureServices(services =>
     {
-        services.AddHostedService<SignalRWorker>();
+        services.AddHostedService<SignalRService>();
         services.AddHttpClient();
     })
     .ConfigureLogging(config =>
