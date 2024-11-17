@@ -50,4 +50,20 @@ public class AssetController : Controller
         
         return View(Result);
     }
+
+    public async Task<IActionResult> AddClient(Database.Identity.Model.Asset Asset)
+    {
+        HttpClient Client = _httpClientFactory.CreateClient();
+        HttpRequestMessage Request = await HttpRequestHelper.CreateRequestMessageWithApiAuthAsync("https://ControlSharp-Api/api/v0.1/Asset/RegisterAsset", HttpMethod.Get, User.Identity.Name, _signInManager);
+        HttpResponseMessage Response = await Client.SendAsync(Request);
+        if (Response.IsSuccessStatusCode)
+        {
+            return Ok();
+        }
+        else
+        {
+            return Conflict();
+        }
+        
+    }
 }
