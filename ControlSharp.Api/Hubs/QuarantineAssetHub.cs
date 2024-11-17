@@ -2,6 +2,7 @@
 using ControlSharp.Database.Identity;
 using ControlSharp.Database.Identity.Model;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 
 namespace ControlSharp.Api.Hubs;
 
@@ -20,13 +21,29 @@ public class QuarantineAssetHub : Hub<IQuarantineAssetAction>
     
     public async Task Register(string Hash, string Hostname)
     {
-        IQueryable<Asset> Result = _context.Asset.Where(asset => asset.Hash.Equals(Hash) && asset.Registered == true);
-        if (Result.Count() == 1)
+        List<Asset> Result = await _context.Asset.Where(asset => asset.Hash.Equals(Hash)).ToListAsync();
+        Asset Client = Result.FirstOrDefault();
+        if (Client is not null)
         {
-            IQuarantineAssetHub SingleClient = Clients.Client(Context.ConnectionId);
-            SingleClient.CreateConnectingToMain(_configuration.GetValue<string>("AssetHubId"));
-        }
-        else
+            if (Client.Registered == true)
+            {
+                IQuarantineAssetAction SingleClient = Clients.Client(Context.ConnectionId);
+                SingleClient.CreateConnectingToMain(_configuration.GetValue<string>("AssetHubId"));
+            }
+            else
+            {
+                string CurrentIp = Context.GetHttpContext().Connection.RemoteIpAddress.ToString();
+                
+                if (!Client.Ip.Equals(CurrentIp))
+                {
+                    Client.Ip = CurrentIp;
+                }
+                
+                Client.LastOnline = DateTimeOffset.Now;
+                _context.Asset.Update(Client);
+                await _context.SaveChangesAsync();
+            }
+        }else
         {
             await _context.Asset.AddAsync(new Asset()
             {
@@ -34,7 +51,9 @@ public class QuarantineAssetHub : Hub<IQuarantineAssetAction>
                 Created = DateTimeOffset.Now,
                 Name = Hostname,
                 Hash = Hash,
-                Registered = false
+                Registered = false,
+                LastOnline = DateTimeOffset.Now,
+                Ip = Context.GetHttpContext().Connection.RemoteIpAddress.ToString()
             });
             
             await _context.SaveChangesAsync();
