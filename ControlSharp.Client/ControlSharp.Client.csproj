@@ -18,6 +18,21 @@
       <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="8.0.1" />
       <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
       <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+<<<<<<< HEAD
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ControlSharp.Mgmt.Service\ControlSharp.Mgmt.Service.csproj" />
+=======
+>>>>>>> origin/Client
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+        <JsonSerializerIsReflectionEnabledByDefault>true</JsonSerializerIsReflectionEnabledByDefault>
+      <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="8.0.8" />
+      <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="8.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="8.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
+      <FrameworkReference Include="Microsoft.AspNetCore.App"/>
     </ItemGroup>
 
     <ItemGroup>
