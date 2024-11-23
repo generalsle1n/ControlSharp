@@ -54,16 +54,15 @@ public class AssetController : Controller
     public async Task<IActionResult> AddClient(Database.Identity.Model.Asset Asset)
     {
         HttpClient Client = _httpClientFactory.CreateClient();
-        HttpRequestMessage Request = await HttpRequestHelper.CreateRequestMessageWithApiAuthAsync("https://ControlSharp-Api/api/v0.1/Asset/RegisterAsset", HttpMethod.Get, User.Identity.Name, _signInManager);
-        HttpResponseMessage Response = await Client.SendAsync(Request);
-        if (Response.IsSuccessStatusCode)
-        {
-            return Ok();
-        }
-        else
-        {
-            return Conflict();
-        }
+ 
+        HttpRequestMessage AssetRegisterRequest = await HttpRequestHelper.CreateRequestMessageWithApiAuthAsync(
+            $"https://ControlSharp-Api/api/v0.1/Asset/RegisterAsset/{Asset.Id}",
+            HttpMethod.Post,
+            User.Identity.Name,
+            _signInManager);
         
+        HttpResponseMessage AssetRegisterResponse = await Client.SendAsync(AssetRegisterRequest);
+        
+        return RedirectToAction("Quarantine");
     }
 }
