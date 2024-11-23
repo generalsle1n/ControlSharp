@@ -45,6 +45,7 @@ public class QuarantineAssetHub : Hub<IQuarantineAssetAction>
                     Client.Ip = CurrentIp;
                 }
                 
+                Client.ConnectionId = Context.ConnectionId;
                 Client.LastOnline = DateTimeOffset.Now;
                 _context.Asset.Update(Client);
                 await _context.SaveChangesAsync();
@@ -59,10 +60,11 @@ public class QuarantineAssetHub : Hub<IQuarantineAssetAction>
                 Hash = Hash,
                 Registered = false,
                 LastOnline = DateTimeOffset.Now,
-                Ip = Context.GetHttpContext().Connection.RemoteIpAddress.ToString()
+                Ip = Context.GetHttpContext().Connection.RemoteIpAddress.ToString(),
+                ConnectionId = Context.ConnectionId
             });
             
             await _context.SaveChangesAsync();
         }
-    } 
+    }
 }
