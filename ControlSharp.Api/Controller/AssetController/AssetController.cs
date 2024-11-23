@@ -40,8 +40,8 @@ public class AssetController : ControllerBase
 
     [HttpGet]
     [Authorize(Policy = nameof(AccessRole.Super))]
-    [Route("[action]/{ID}")]
-    public async Task<ActionResult<Asset>> Asset(Guid ID)
+    [Route("{ID}")]
+    public async Task<ActionResult<Asset>> GetAsset(Guid ID)
     {
         Asset asset = await _context.Asset.FindAsync(ID);
         if (asset is not null)
@@ -56,8 +56,8 @@ public class AssetController : ControllerBase
     
     [HttpPost]
     [Authorize(Policy = nameof(AccessRole.Super))]
-    [Route("[action]/{ID}")]
-    public async Task<ActionResult> RegisterAsset(Guid ID, CancellationToken token)
+    [Route("{ID}")]
+    public async Task<ActionResult> CreateAsset(Guid ID, CancellationToken token)
     {
         try
         {
