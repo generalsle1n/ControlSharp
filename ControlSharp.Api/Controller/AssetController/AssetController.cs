@@ -38,6 +38,22 @@ public class AssetController : ControllerBase
         return _context.Asset.Where(asset => asset.Registered == false).ToList();
     }
 
+    [HttpGet]
+    [Authorize(Policy = nameof(AccessRole.Super))]
+    [Route("[action]/{ID}")]
+    public async Task<ActionResult<Asset>> Asset(Guid ID)
+    {
+        Asset asset = await _context.Asset.FindAsync(ID);
+        if (asset is not null)
+        {
+            return Ok(asset);
+        }
+        else
+        {
+            return NotFound();
+        }
+    }
+    
     [HttpPost]
     [Authorize(Policy = nameof(AccessRole.Super))]
     [Route("[action]/{ID}")]
