@@ -30,6 +30,12 @@ public class QuarantineAssetHub : Hub<IQuarantineAssetAction>
                 IQuarantineAssetAction SingleClient = Clients.Client(Context.ConnectionId);
                 SingleClient.CreateConnectingToMain(_configuration.GetValue<string>("AssetHubId"));
             }
+            else if (Client.Banned == true)
+            {
+                IQuarantineAssetAction SingleClient = Clients.Client(Context.ConnectionId);
+                SingleClient.DestroyAssetAsync();
+                _logger.LogInformation($"Banned client tried to connect: {Client.Name} - {Client.Hash}");
+            }
             else
             {
                 string CurrentIp = Context.GetHttpContext().Connection.RemoteIpAddress.ToString();
