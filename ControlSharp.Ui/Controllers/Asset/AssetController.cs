@@ -56,7 +56,7 @@ public class AssetController : Controller
         HttpClient Client = _httpClientFactory.CreateClient();
  
         HttpRequestMessage AssetRegisterRequest = await HttpRequestHelper.CreateRequestMessageWithApiAuthAsync(
-            $"https://ControlSharp-Api/api/v0.1/Asset/RegisterAsset/{Asset.Id}",
+            $"https://ControlSharp-Api/api/v0.1/Asset/{Asset.Id}",
             HttpMethod.Post,
             User.Identity.Name,
             _signInManager);
