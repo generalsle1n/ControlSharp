@@ -71,6 +71,34 @@ public class AssetController : ControllerBase
             return NotFound();
         }
         catch (Exception e)
+    [HttpDelete]
+    [Authorize(Policy = nameof(AccessRole.Super))]
+    [Route("{ID}")]
+    public async Task<ActionResult> DeleteAsset(Guid ID, CancellationToken token)
+    {
+        try
+        {
+            Asset asset = await _context.Asset.FindAsync(ID);
+            if (asset is not null)
+            {
+                if (asset.Banned != true)
+                {
+                    asset.Banned = true;
+                    _context.Asset.Update(asset);
+                    await _context.SaveChangesAsync(token);
+                }
+                
+                IQuarantineAssetAction QuarantineClient = _quarantineAssetHub.Clients.Client(asset.ConnectionId);
+                IRegisteredAssetClient RegisteredClient = _registeredAssetHub.Clients.Client(asset.ConnectionId);
+
+                await QuarantineClient.DestroyAssetAsync();
+                await RegisteredClient.DestroyAssetAsync();
+                
+                return Ok(asset);
+            }
+            return NotFound();
+        }
+        catch (Exception e)
         {
             return StatusCode(500);
         }
