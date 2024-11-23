@@ -38,9 +38,9 @@ public class SignalRService : BackgroundService
         
         _assetHub = AssetHubBuilder.Build();
         
-        _assetHub.On("ExecuteBinary", (string message) =>
+        _assetHub.On("DestroyAssetAsync", () =>
         {
-            _logger.LogInformation(message);
+            Environment.Exit(0);
         });
     }
 
