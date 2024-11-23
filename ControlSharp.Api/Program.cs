@@ -1,8 +1,10 @@
 using System.Reflection;
 using ControlSharp.Api.Hubs;
+using ControlSharp.Api.Hubs.Filter;
 using ControlSharp.Database.Identity;
 using ControlSharp.Database.Identity.Model;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
 using Serilog;
 using Serilog.Events;
 
@@ -17,7 +19,10 @@ Builder.AddDatabase();
 Builder.Services.AddControllers();
 Builder.Services.AddEndpointsApiExplorer();
 Builder.Services.AddSwaggerGen();
-Builder.Services.AddSignalR()
+Builder.Services.AddSignalR(option =>
+    {
+        option.AddFilter<GeneralHubFilter>();
+    })
     .AddMessagePackProtocol();
 
 Builder.Configuration.AddInMemoryCollection(new List<KeyValuePair<string, string?>>()
