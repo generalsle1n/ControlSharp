@@ -33,15 +33,18 @@
             <td>@SingleAsset.Hash</td>
             <td>
                 <div class="btn-group">
-                    <form asp-controller="Asset" asp-action="AddClient" asp-route-returnurl="@ViewData["ReturnUrl"]">
+                    <form asp-controller="Asset" asp-action="AddClient">
                         <input type="hidden" name="Id" value="@SingleAsset.Id" />
                         <button type="submit" class="btn btn-success btn-sm">
                             <span class="bi-plus"/>
                         </button>
                     </form>
-                    <button type="button" class="btn btn-danger btn-sm">
-                        <span class="bi-trash3"/>
-                    </button>
+                    <form asp-controller="Asset" asp-action="DeleteClient">
+                        <input type="hidden" name="Id" value="@SingleAsset.Id" />
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <span class="bi-ban"/>
+                        </button>
+                    </form>
                 </div>
             </td>
         </tr>
