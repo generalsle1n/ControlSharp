@@ -40,19 +40,23 @@ public class AssetController : ControllerBase
 
     [HttpPost]
     [Authorize(Policy = nameof(AccessRole.Super))]
-    [Route("[action]")]
-    public async Task<ActionResult> RegisterAsset(Asset asset, CancellationToken token)
+    [Route("[action]/{ID}")]
+    public async Task<ActionResult> RegisterAsset(Guid ID, CancellationToken token)
     {
         try
         {
-            asset.Registered = true;
-            _context.Asset.Update(asset);
-            await _context.SaveChangesAsync(token);
-            return Ok();
+            Asset asset = await _context.Asset.FindAsync(ID);
+            if (asset is not null)
+            {
+                asset.Registered = true;
+                await _context.SaveChangesAsync(token);
+                return Ok(asset);
+            }
+            return NotFound();
         }
         catch (Exception e)
         {
-            return new BadRequestObjectResult(e);
+            return StatusCode(500);
         }
     }
 }
