@@ -14,12 +14,15 @@ public class AssetController : ControllerBase
 {
     private readonly DatabaseContext _context;
     private readonly ILogger<AssetController> _logger;
+    private readonly IHubContext<QuarantineAssetHub, IQuarantineAssetAction> _quarantineAssetHub;
+    private readonly IHubContext<RegisteredAssetHub, IRegisteredAssetClient> _registeredAssetHub;
     
-    public AssetController(DatabaseContext context, ILogger<AssetController> logger, UserManager<User>a)
+    public AssetController(DatabaseContext context, ILogger<AssetController> logger, IHubContext<QuarantineAssetHub, IQuarantineAssetAction> quarantineAssetHub, IHubContext<RegisteredAssetHub, IRegisteredAssetClient> registeredAssetHub)
     {
         _context = context;
         _logger = logger;
-        
+        _quarantineAssetHub = quarantineAssetHub;
+        _registeredAssetHub = registeredAssetHub;
     }
     
     [HttpGet]
@@ -71,6 +74,11 @@ public class AssetController : ControllerBase
             return NotFound();
         }
         catch (Exception e)
+        {
+            return StatusCode(500);
+        }
+    }
+    
     [HttpDelete]
     [Authorize(Policy = nameof(AccessRole.Super))]
     [Route("{ID}")]
