@@ -3,4 +3,5 @@
 public interface IRegisteredAssetClient
 {
     public Task ExecuteBinary(string message);
+    public Task DestroyAssetAsync();
 }

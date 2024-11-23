@@ -3,4 +3,5 @@
 public interface IQuarantineAssetAction
 {
     public Task CreateConnectingToMain(string connectionId);
+    public Task DestroyAssetAsync();
 }
