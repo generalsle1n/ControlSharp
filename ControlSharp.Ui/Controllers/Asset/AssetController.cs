@@ -65,4 +65,18 @@ public class AssetController : Controller
         
         return RedirectToAction("Quarantine");
     }
+    public async Task<IActionResult> DeleteClient(Database.Identity.Model.Asset Asset)
+    {
+        HttpClient Client = _httpClientFactory.CreateClient();
+        Client.Timeout = TimeSpan.FromMinutes(30);
+        HttpRequestMessage AssetRegisterRequest = await HttpRequestHelper.CreateRequestMessageWithApiAuthAsync(
+            $"https://ControlSharp-Api/api/v0.1/Asset/{Asset.Id}",
+            HttpMethod.Delete,
+            User.Identity.Name,
+            _signInManager);
+        
+        HttpResponseMessage AssetRegisterResponse = await Client.SendAsync(AssetRegisterRequest);
+        
+        return RedirectToAction("Quarantine");
+    }
 }
