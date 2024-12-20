@@ -9,7 +9,8 @@ namespace ControlSharp.Api.Controller.AssetController;
 [ApiController]
 [Route("api/0.1/[controller]")]
 [Produces("application/json")]
-// [MiddlewareFilter<ApiAuthFilter>]
+[Authorize(Policy = nameof(AccessRole.Asset))]
+
 public class AssetController : ControllerBase
 {
     private readonly DatabaseContext _context;

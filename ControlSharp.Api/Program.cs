@@ -1,7 +1,9 @@
 using System.Reflection;
-using ControlSharp.Database.Identity;
-using ControlSharp.Database.Identity.Model;
-using Microsoft.AspNetCore.Identity;
+using ControlSharp.Api.Database;
+using ControlSharp.Api.Database.Model;
+using ControlSharp.Api.Extension;
+using ControlSharp.Api.Services;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
 
@@ -39,6 +41,7 @@ Builder.Services.AddAuthorization(option =>
         policy.RequireRole(AccessRole.Super.ToString());
     });
 });
+
 Builder.Services.AddIdentityApiEndpoints<User>()
     .AddSignInManager<SignInManager<User>>()
     .AddRoles<Role>()
@@ -46,7 +49,21 @@ Builder.Services.AddIdentityApiEndpoints<User>()
 
 var app = Builder.Build();
 
-app.MapIdentityApi<User>();
+MapApiFeatures Feature = new MapApiFeatures()
+{
+    Info = false,
+    Login = true,
+    Manage = false,
+    Refresh = false,
+    Register = false,
+    ConfirmMail = false,
+    ForgotPassword = false,
+    ResetPassword = false,
+    TwoFactor = false,
+    ResendConfirmMail = false,
+};
+
+app.MapIdentityApiRaw<User>(Feature);
 
 app.MapDefaultEndpoints();
 app.InitializeDatabase(CreateDatabase: true);
