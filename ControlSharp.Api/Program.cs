@@ -1,11 +1,13 @@
 using System.Reflection;
-using ControlSharp.Api.Database;
-using ControlSharp.Api.Database.Model;
+using ControlSharp.Database;
+using ControlSharp.Database.Identity.Model;
 using ControlSharp.Api.Extension;
-using ControlSharp.Api.Services;
+//using ControlSharp.Api.Services;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
+using ControlSharp.Database.Identity;
+using Microsoft.AspNetCore.Identity;
 
 const string DatabaseConnection = "DefaultConnection";
 
