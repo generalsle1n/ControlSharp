@@ -21,7 +21,7 @@ public static class ExtensionDatabase
         return builder;
     }
 
-    public static WebApplication InitializeDatabase(this WebApplication app)
+    public static WebApplication InitializeDatabase(this WebApplication app, bool CreateDatabase = false)
     {
         IServiceScope Scope = app.Services.CreateScope();
         DatabaseContext Context = Scope.ServiceProvider.GetRequiredService<DatabaseContext>();
@@ -29,7 +29,7 @@ public static class ExtensionDatabase
         UserManager<User> UserManager = Scope.ServiceProvider.GetRequiredService<UserManager<User>>();
         RoleManager<Role> roleManager = Scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
         
-        Task Result = Context.CheckDatabaseAsync(UserManager, roleManager);
+        Task Result = Context.CheckDatabaseAsync(UserManager, roleManager, CreateDatabase);
         Result.Wait();
         
         return app;
