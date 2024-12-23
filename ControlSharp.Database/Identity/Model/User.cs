@@ -6,4 +6,5 @@ public class User : IdentityUser<Guid>
 {
     public DateTimeOffset? Created { get; set; }
     public DateTimeOffset? LastOnline { get; set; }
+    public Asset? Asset { get; set; }
 }
