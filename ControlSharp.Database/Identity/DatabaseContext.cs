@@ -56,14 +56,39 @@ public class DatabaseContext : IdentityDbContext<User, Role, Guid>
     }
     private async Task<Role> CreateRoleAsync(RoleManager<Role> roleManager)
     {
+        Role SuperRole = new Role()
+        {
+            Name = nameof(AccessRole.Super)
+        };
+
+        Role AssetRole = new Role()
+        {
+            Name = nameof(AccessRole.Asset)
+        };
+
+        Role ReadOnlyRole = new Role()
+        {
+            Name = nameof(AccessRole.ReadOnly)
+        };
+
         Role AdminRole = new Role()
         {
-            Name = AccessRole.Super.ToString()
+            Name = nameof(AccessRole.Admin)
         };
         
+        await roleManager.CreateAsync(SuperRole);
+        _logger.LogInformation($"Created Role: {SuperRole.Name}");
+
+        await roleManager.CreateAsync(AssetRole);
+        _logger.LogInformation($"Created Role: {AssetRole.Name}");
+
+        await roleManager.CreateAsync(ReadOnlyRole);
+        _logger.LogInformation($"Created Role: {ReadOnlyRole.Name}");
+
         await roleManager.CreateAsync(AdminRole);
         _logger.LogInformation($"Created Role: {AdminRole.Name}");
-        return AdminRole;
+
+        return SuperRole;
     }
     private async Task AddUserToRoleAsync(UserManager<User> userManager, RoleManager<Role> roleManager, User User, Role Role)
     {
