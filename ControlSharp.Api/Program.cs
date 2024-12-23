@@ -50,9 +50,14 @@ Builder.Services.AddAuthentication(option =>
 
 Builder.Services.AddAuthorization(option =>
 {
-    option.AddPolicy(AccessRole.Super.ToString(), policy =>
+    option.AddPolicy(nameof(AccessRole.Super), policy =>
     {
-        policy.RequireRole(AccessRole.Super.ToString());
+        policy.RequireRole(nameof(AccessRole.Super));
+    });
+
+    option.AddPolicy(nameof(AccessRole.Asset), policy =>
+    {
+        policy.RequireRole(nameof(AccessRole.Asset), nameof(AccessRole.Super));
     });
 });
 
