@@ -4,6 +4,12 @@ using ControlSharp.Database.Identity.Model;
 using ControlSharp.Api.Extension;
 //using ControlSharp.Api.Services;
 using Microsoft.EntityFrameworkCore;
+using ControlSharp.Api.Hubs;
+using ControlSharp.Api.Hubs.Filter;
+using ControlSharp.Database.Identity;
+using ControlSharp.Database.Identity.Model;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
 using Serilog;
 using Serilog.Events;
 using ControlSharp.Database.Identity;
@@ -20,6 +26,16 @@ Builder.AddDatabase();
 Builder.Services.AddControllers();
 Builder.Services.AddEndpointsApiExplorer();
 Builder.Services.AddSwaggerGen();
+Builder.Services.AddSignalR(option =>
+    {
+        option.AddFilter<GeneralHubFilter>();
+    })
+    .AddMessagePackProtocol();
+
+Builder.Configuration.AddInMemoryCollection(new List<KeyValuePair<string, string?>>()
+{
+    new KeyValuePair<string, string?>("AssetHubId", $"{Guid.NewGuid()}{Guid.NewGuid()}")
+});
 
 // Builder.Services.AddSerilog(Config =>
 // {
@@ -80,6 +96,16 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHub<QuarantineAssetHub>("/login", config =>
+{
+    config.AllowStatefulReconnects = true;
+});
+app.MapHub<RegisteredAssetHub>($"/{app.Configuration.GetValue<string>("AssetHubId")}", config =>
+{
+    config.AllowStatefulReconnects = true;
+    config.CloseOnAuthenticationExpiration = true;
+});
 
 app.MapControllers();
 

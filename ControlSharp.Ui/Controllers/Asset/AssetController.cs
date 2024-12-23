@@ -22,10 +22,10 @@ public class AssetController : Controller
         _signInManager = signInManager;
     }
     
-    public async Task<IActionResult> Asset()
+    public async Task<IActionResult> Registered()
     {
         HttpClient Client = _httpClientFactory.CreateClient();
-        HttpRequestMessage Request = await HttpRequestHelper.CreateRequestMessageWithApiAuthAsync("https://ControlSharp-Api/api/0.1/Asset", HttpMethod.Get, User.Identity.Name, _signInManager);
+        HttpRequestMessage Request = await HttpRequestHelper.CreateRequestMessageWithApiAuthAsync("https://ControlSharp-Api/api/v0.1/Asset/Registered", HttpMethod.Get, User.Identity.Name, _signInManager);
         HttpResponseMessage Response = await Client.SendAsync(Request);
         
         List<Database.Identity.Model.Asset> Result = null;
@@ -35,5 +35,48 @@ public class AssetController : Controller
         }
         
         return View(Result);
+    }
+    public async Task<IActionResult> Quarantine()
+    {
+        HttpClient Client = _httpClientFactory.CreateClient();
+        HttpRequestMessage Request = await HttpRequestHelper.CreateRequestMessageWithApiAuthAsync("https://ControlSharp-Api/api/v0.1/Asset/Unregistered", HttpMethod.Get, User.Identity.Name, _signInManager);
+        HttpResponseMessage Response = await Client.SendAsync(Request);
+        
+        List<Database.Identity.Model.Asset> Result = null;
+        if (Response.IsSuccessStatusCode)
+        {
+            Result = await Response.Content.ReadFromJsonAsync<List<Database.Identity.Model.Asset>>();
+        }
+        
+        return View(Result);
+    }
+
+    public async Task<IActionResult> AddClient(Database.Identity.Model.Asset Asset)
+    {
+        HttpClient Client = _httpClientFactory.CreateClient();
+ 
+        HttpRequestMessage AssetRegisterRequest = await HttpRequestHelper.CreateRequestMessageWithApiAuthAsync(
+            $"https://ControlSharp-Api/api/v0.1/Asset/{Asset.Id}",
+            HttpMethod.Post,
+            User.Identity.Name,
+            _signInManager);
+        
+        HttpResponseMessage AssetRegisterResponse = await Client.SendAsync(AssetRegisterRequest);
+        
+        return RedirectToAction("Quarantine");
+    }
+    public async Task<IActionResult> DeleteClient(Database.Identity.Model.Asset Asset)
+    {
+        HttpClient Client = _httpClientFactory.CreateClient();
+        Client.Timeout = TimeSpan.FromMinutes(30);
+        HttpRequestMessage AssetRegisterRequest = await HttpRequestHelper.CreateRequestMessageWithApiAuthAsync(
+            $"https://ControlSharp-Api/api/v0.1/Asset/{Asset.Id}",
+            HttpMethod.Delete,
+            User.Identity.Name,
+            _signInManager);
+        
+        HttpResponseMessage AssetRegisterResponse = await Client.SendAsync(AssetRegisterRequest);
+        
+        return RedirectToAction("Quarantine");
     }
 }

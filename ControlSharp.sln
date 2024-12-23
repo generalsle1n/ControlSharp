@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlSharp.Database", "Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlSharp.Ui", "ControlSharp.Ui\ControlSharp.Ui.csproj", "{11FE5C58-5F11-4605-83C5-200F094FDAAA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlSharp.Client", "ControlSharp.Client\ControlSharp.Client.csproj", "{FA42B79B-E9A3-41D4-816D-B4CA10FD5B76}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{11FE5C58-5F11-4605-83C5-200F094FDAAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11FE5C58-5F11-4605-83C5-200F094FDAAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11FE5C58-5F11-4605-83C5-200F094FDAAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA42B79B-E9A3-41D4-816D-B4CA10FD5B76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA42B79B-E9A3-41D4-816D-B4CA10FD5B76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA42B79B-E9A3-41D4-816D-B4CA10FD5B76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA42B79B-E9A3-41D4-816D-B4CA10FD5B76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

