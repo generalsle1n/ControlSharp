@@ -4,4 +4,5 @@ public interface IQuarantineAssetAction
 {
     public Task CreateConnectingToMain(string connectionId);
     public Task DestroyAssetAsync();
+    public Task SetPassword(string Password);
 }
