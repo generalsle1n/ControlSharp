@@ -6,7 +6,7 @@ public class SecretManager
 {
     private const int _adminKeySize = 64;
 
-    internal static string CreateAdminToken()
+    public static string CreateAdminToken()
     {
         byte[] TokenData = RandomNumberGenerator.GetBytes(_adminKeySize);
         string Secret = Convert.ToBase64String(TokenData);
