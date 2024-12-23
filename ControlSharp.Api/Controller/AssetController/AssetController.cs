@@ -72,12 +72,33 @@ public class AssetController : ControllerBase
     {
         try
         {
-            Asset asset = await _context.Asset.FindAsync(ID);
-            if (asset is not null)
+            Asset Asset = await _context.Asset.FindAsync(ID);
+            if (Asset is not null)
             {
-                asset.Registered = true;
+                Asset.Registered = true;
                 await _context.SaveChangesAsync(token);
-                return Ok(asset);
+                
+                _logger.LogInformation($"Asset registered: {Asset.Hash}");
+
+                User AssetLogin = new User()
+                {
+                    UserName = Asset.Hash,
+                    Created = DateTimeOffset.Now,
+                    Asset = Asset
+                };
+
+                string AssetPassword = SecretManager.CreateAdminToken();
+
+                await _userManager.CreateAsync(AssetLogin, AssetPassword);
+                _logger.LogInformation($"Asset login created: {AssetLogin.Id}");
+
+                await _userManager.AddToRoleAsync(AssetLogin, nameof(AccessRole.Asset));
+                _logger.LogInformation($"Asset ({AssetLogin.Id}) added to role: {nameof(AccessRole.Asset)}");
+
+                await _quarantineAssetHub.Clients.Client(Asset.ConnectionId).SetPassword(AssetPassword);
+                await _quarantineAssetHub.Clients.Client(Asset.ConnectionId).CreateConnectingToMain(_configuration.GetValue<string>("AssetHubId"));
+
+                return Ok(Asset);
             }
             return NotFound();
         }
