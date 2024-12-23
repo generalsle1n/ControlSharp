@@ -20,13 +20,15 @@ public class AssetController : ControllerBase
     private readonly ILogger<AssetController> _logger;
     private readonly IHubContext<QuarantineAssetHub, IQuarantineAssetAction> _quarantineAssetHub;
     private readonly IHubContext<RegisteredAssetHub, IRegisteredAssetClient> _registeredAssetHub;
+    private readonly UserManager<User> _userManager;
     
-    public AssetController(DatabaseContext context, ILogger<AssetController> logger, IHubContext<QuarantineAssetHub, IQuarantineAssetAction> quarantineAssetHub, IHubContext<RegisteredAssetHub, IRegisteredAssetClient> registeredAssetHub)
+    public AssetController(DatabaseContext context, ILogger<AssetController> logger, IHubContext<QuarantineAssetHub, IQuarantineAssetAction> quarantineAssetHub, IHubContext<RegisteredAssetHub, IRegisteredAssetClient> registeredAssetHub, UserManager<User> userManager)
     {
         _context = context;
         _logger = logger;
         _quarantineAssetHub = quarantineAssetHub;
         _registeredAssetHub = registeredAssetHub;
+        _userManager = userManager;
     }
     
     [HttpGet]
