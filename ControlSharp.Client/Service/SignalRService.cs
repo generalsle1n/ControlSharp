@@ -12,11 +12,15 @@ public class SignalRService : BackgroundService
     private HubConnection _assetHub;
     private const int TimeOut = 1000;
     private const int BufferSize = 1024;
+    private SecureString _password;
+    private string _connectionId;
+    private HttpClient _client;
 
-    public SignalRService(ILogger<SignalRService> logger, IConfiguration configuration)
+    public SignalRService(ILogger<SignalRService> logger, IConfiguration configuration, HttpClient client)
     {
         _logger = logger;
         _configuration = configuration;
+        _client = client;
         
         ConfigureHub();
     }
@@ -41,6 +45,21 @@ public class SignalRService : BackgroundService
         _assetHub.On("DestroyAssetAsync", () =>
         {
             Environment.Exit(0);
+        });
+
+        _assetHub.On("SetPassword", (string Password) =>
+        {
+            _password = new SecureString();
+
+            foreach (char SingleChar in Password.ToCharArray())
+            {
+                _password.AppendChar(SingleChar);
+    }
+        });
+
+        _assetHub.On("CreateConnectingToMain", (string ID) =>
+        {
+            _connectionId = ID;
         });
     }
 
