@@ -1,0 +1,72 @@
+﻿@page "/assets"
+@using System.Text.Json
+@using ControlSharp.Database.Identity.Model
+@attribute [StreamRendering]
+@inject IHttpClientFactory ClientFactory
+
+<PageTitle>Assets</PageTitle>
+
+<h1>Assets</h1>
+
+<p>This Page shows all configured Assets</p>
+
+@if (AllAssets == null)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Created</th>
+            <th>LastOnline</th>
+            <th>IP</th>
+            <th>Active</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (Asset SingleAsset in AllAssets)
+        {
+            <tr>
+                <td>@SingleAsset.Id</td>
+                <td>@SingleAsset.Name</td>
+                <td>@SingleAsset.Created</td>
+                <td>@SingleAsset.LastOnline</td>
+                <td>@SingleAsset.Ip</td>
+                <td>@SingleAsset.Active</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Asset> AllAssets;
+
+    protected override async Task OnInitializedAsync()
+    {
+        HttpClient Client = ClientFactory.CreateClient();
+        Client.BaseAddress = new Uri("https://ControlSharp-Api");
+
+        HttpRequestMessage Request = new HttpRequestMessage(HttpMethod.Get, "/api/0.1/Asset");
+
+        string Username = "17715155-1030-401f-86e8-502795abd042";
+        string Password = "+XIAgmVqbELWSB7Cz2E+OWrGkALVhlCLVlJY566ezRRO760qqBm607OKCAxl2HxB9UMmIbBJUx2GnVACwG2LIkKPQVvGWAqEhIbZI9O/+zddUO3LilgPYX6xpsWZ/wd4ywk4f0dMFnJM0sEhxeBU1B93sDe25pXZzqPSxIiPtts=";
+        
+        Request.Headers.Add(Username, Password);
+
+        HttpResponseMessage Response = await Client.SendAsync(Request);
+
+        string Data = await Response.Content.ReadAsStringAsync();
+        Console.WriteLine(Data);
+        AllAssets = JsonSerializer.Deserialize<List<Asset>>(Data, new JsonSerializerOptions()
+        {
+            PropertyNameCaseInsensitive = true
+        });
+    }
+}
