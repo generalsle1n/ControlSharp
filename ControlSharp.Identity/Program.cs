@@ -1,3 +1,6 @@
+using ControlSharp.Identity.Database;
+using Microsoft.EntityFrameworkCore;
+
 namespace ControlSharp.Identity
 {
     public class Program
