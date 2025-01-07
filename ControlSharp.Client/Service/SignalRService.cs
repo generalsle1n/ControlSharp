@@ -47,7 +47,7 @@ public class SignalRService : BackgroundService
             Environment.Exit(0);
         });
 
-        _assetHub.On("CreateConnectingToMain", (string ID) =>
+        _assetHub.On("CreateConnectingToMain", async (string ID) =>
         {
             _connectionId = ID;
         });
