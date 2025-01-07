@@ -16,6 +16,7 @@
     <ItemGroup>
       <ProjectReference Include="..\ControlSharp.Api\ControlSharp.Api.csproj" />
       <ProjectReference Include="..\ControlSharp.Client\ControlSharp.Client.csproj" />
+      <ProjectReference Include="..\ControlSharp.Identity\ControlSharp.Identity.csproj" />
       <ProjectReference Include="..\ControlSharp.Ui\ControlSharp.Ui.csproj" />
     </ItemGroup>
 
