@@ -66,6 +66,11 @@ Builder.Services.AddIdentityApiEndpoints<User>()
     .AddRoles<Role>()
     .AddEntityFrameworkStores<DatabaseContext>();
 
+Builder.Services.Configure<IdentityOptions>(Options =>
+{
+    Options.Password.RequireLowercase = false;
+});
+
 var app = Builder.Build();
 
 MapApiFeatures Feature = new MapApiFeatures()
