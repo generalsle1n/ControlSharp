@@ -10,6 +10,7 @@ public class SignalRService : BackgroundService
     private readonly ILogger<SignalRService> _logger;
     private readonly IConfiguration _configuration;
     private HubConnection _assetHub;
+    private HubConnection _mainHub;
     private const int TimeOut = 1000;
     private const int BufferSize = 1024;
     private SecureString _password;
