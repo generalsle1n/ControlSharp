@@ -55,7 +55,7 @@ public class SignalRService : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        await WaitForConnection(stoppingToken);
+        await WaitForConnection(_assetHub ,stoppingToken);
         await _assetHub.InvokeAsync("Register", await DeviceIDGenerator.GenerateAsync(), Dns.GetHostName(), stoppingToken);
         while (!stoppingToken.IsCancellationRequested)
         {
@@ -69,14 +69,14 @@ public class SignalRService : BackgroundService
         }
     }
 
-    private async Task WaitForConnection(CancellationToken cancellationToken)
+    private async Task WaitForConnection(HubConnection Hub, CancellationToken cancellationToken)
     {
         bool Connected = false;
         while (Connected == false && cancellationToken.IsCancellationRequested == false)
         {
             try
             {
-                await _assetHub.StartAsync(cancellationToken);
+                await Hub.StartAsync(cancellationToken);
                 Connected = true;
                 break;
             }
