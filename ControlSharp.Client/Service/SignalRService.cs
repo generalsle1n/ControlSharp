@@ -85,5 +85,22 @@ public class SignalRService : BackgroundService
                 await Task.Delay(TimeOut, cancellationToken);
             }
         }
+    private async Task ConfigureMainConnectionAsync(CancellationToken cancellationToken)
+    {
+        string Token = await GetTokenAsync(cancellationToken);
+        string Server = _configuration.GetValue<string>("server");
+        IHubConnectionBuilder AssetHubBuilder = new HubConnectionBuilder()
+            .WithUrl($"{Server}/{_connectionId}")
+            .AddMessagePackProtocol()
+            .WithKeepAliveInterval(TimeSpan.FromSeconds(30))
+            .WithStatefulReconnect()
+            .WithAutomaticReconnect();
+
+        AssetHubBuilder.Services.Configure<HubConnectionOptions>(config =>
+        {
+            config.StatefulReconnectBufferSize = BufferSize;
+        });
+
+        _mainHub = AssetHubBuilder.Build();
     }
 }
