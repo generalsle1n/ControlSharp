@@ -89,6 +89,15 @@ public class SignalRService : BackgroundService
                 await Task.Delay(TimeOut, cancellationToken);
             }
         }
+    }
+
+    private async Task<string> GetTokenAsync(CancellationToken cancellationToken)
+    {
+        string Result = null;
+        Result = await _assetHub.InvokeAsync<string>("GetToken", await DeviceIDGenerator.GenerateAsync(), cancellationToken: cancellationToken);
+        return Result;
+    }
+
     private async Task ConfigureMainConnectionAsync(CancellationToken cancellationToken)
     {
         string Token = await GetTokenAsync(cancellationToken);
