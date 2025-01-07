@@ -59,7 +59,11 @@ public class SignalRService : BackgroundService
         await _assetHub.InvokeAsync("Register", await DeviceIDGenerator.GenerateAsync(), Dns.GetHostName(), stoppingToken);
         while (!stoppingToken.IsCancellationRequested)
         {
-            
+            if(_connectionId is not null)
+            {
+                await ConfigureMainConnectionAsync(stoppingToken);
+                await WaitForConnection(_mainHub, stoppingToken);
+            }
             if (_logger.IsEnabled(LogLevel.Information))
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
