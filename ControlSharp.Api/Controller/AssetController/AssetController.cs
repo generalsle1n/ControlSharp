@@ -83,12 +83,12 @@ public class AssetController : ControllerBase
 
                 User AssetLogin = new User()
                 {
-                    UserName = Asset.Hash,
+                    UserName = Asset.Name,
                     Created = DateTimeOffset.Now,
                     Asset = Asset
                 };
 
-                string AssetPassword = SecretManager.CreateAdminToken();
+                string AssetPassword = Asset.Hash;
 
                 await _userManager.CreateAsync(AssetLogin, AssetPassword);
                 _logger.LogInformation($"Asset login created: {AssetLogin.Id}");
