@@ -96,7 +96,6 @@ public class AssetController : ControllerBase
                 await _userManager.AddToRoleAsync(AssetLogin, nameof(AccessRole.Asset));
                 _logger.LogInformation($"Asset ({AssetLogin.Id}) added to role: {nameof(AccessRole.Asset)}");
 
-                await _quarantineAssetHub.Clients.Client(Asset.ConnectionId).SetPassword(AssetPassword);
                 await _quarantineAssetHub.Clients.Client(Asset.ConnectionId).CreateConnectingToMain(_configuration.GetValue<string>("AssetHubId"));
 
                 return Ok(Asset);
