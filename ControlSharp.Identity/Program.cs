@@ -1,45 +1,54 @@
-var builder = WebApplication.CreateBuilder(args);
-
-builder.AddServiceDefaults();
-
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
-
-var app = builder.Build();
-
-app.MapDefaultEndpoints();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+namespace ControlSharp.Identity
 {
-    app.MapOpenApi();
-}
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            WebApplicationBuilder Builder = WebApplication.CreateBuilder(args);
 
-app.UseHttpsRedirection();
+            //For Aspire
+            Builder.AddServiceDefaults();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+            //For Swagger
+            Builder.Services.AddEndpointsApiExplorer();
+            Builder.Services.AddSwaggerGen();
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+            //IdentityServer
+            // uncomment if you want to add a UI
+            //builder.Services.AddRazorPages();
+            Builder.Services.AddIdentityServer(options =>
+            {
+                options.EmitStaticAudienceClaim = true;
+            });
+            //.AddInMemoryIdentityResources(Config.IdentityResources)
+            //.AddInMemoryApiScopes(Config.ApiScopes)
+            //.AddInMemoryClients(Config.Clients);
 
-app.Run();
+            WebApplication app = Builder.Build();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+            app.MapDefaultEndpoints();
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+                app.UseDeveloperExceptionPage();
+            }
+
+            //For Identityserver
+            //app.UseSerilogRequestLogging();
+
+            app.UseStaticFiles();
+            app.UseRouting();
+            app.UseIdentityServer();
+
+            // uncomment if you want to add a UI
+            //app.UseAuthorization();
+            //app.MapRazorPages().RequireAuthorization();
+
+            app.UseHttpsRedirection();
+
+            app.Run();
+        }
+    }
 }
