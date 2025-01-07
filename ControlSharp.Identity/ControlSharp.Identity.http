@@ -1,0 +1,6 @@
+@ControlSharp.Identity_HostAddress = http://localhost:5177
+
+GET {{ControlSharp.Identity_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
