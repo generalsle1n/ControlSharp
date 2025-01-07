@@ -82,7 +82,8 @@ public class QuarantineAssetHub : Hub<IQuarantineAssetAction>
         Asset SingleAsset = await _context.Asset.Where(SingleAsset => SingleAsset.Hash.Equals(Hash) && SingleAsset.Registered == true).FirstOrDefaultAsync();
         if(SingleAsset is not null)
         {
-            //User AssetUser = await _userManager.FindByNameAsync(SingleAsset.Name);
+            User AssetUser = await _userManager.FindByNameAsync(SingleAsset.Name);
+            await _signInManager.SignInAsync(AssetUser,false);
             //if(AssetUser is not null)
             //{
             //    HttpRequestMessage Request = new HttpRequestMessage()
@@ -94,11 +95,11 @@ public class QuarantineAssetHub : Hub<IQuarantineAssetAction>
             //    Request.Content = JsonContent.Create("");
             //How To Get Token???
 
-            }
-            else
-            {
-                _logger.LogWarning($"An registered Client requested an token but no User is associated with the Asset (Name: {SingleAsset.Name}, IP: {Connection.RemoteIpAddress}, Hash: {Hash}, ConnectionID: {Context.ConnectionId})");
-            }
+            //}
+            //else
+            //{
+            //    _logger.LogWarning($"An registered Client requested an token but no User is associated with the Asset (Name: {SingleAsset.Name}, IP: {Connection.RemoteIpAddress}, Hash: {Hash}, ConnectionID: {Context.ConnectionId})");
+            //}
 
         }
         else
