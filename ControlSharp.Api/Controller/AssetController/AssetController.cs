@@ -1,5 +1,6 @@
 using ControlSharp.Api.Hubs;
 using ControlSharp.Api.Hubs.Interfaces;
+using ControlSharp.Database;
 using ControlSharp.Database.Identity;
 using ControlSharp.Database.Identity.Model;
 using Microsoft.AspNetCore.Authorization;
