@@ -75,4 +75,35 @@ public class QuarantineAssetHub : Hub<IQuarantineAssetAction>
             await _context.SaveChangesAsync();
         }
     }
+
+    public async Task GetToken(string Hash)
+    {
+        IHttpConnectionFeature Connection = Context.Features.Get<IHttpConnectionFeature>();
+        Asset SingleAsset = await _context.Asset.Where(SingleAsset => SingleAsset.Hash.Equals(Hash) && SingleAsset.Registered == true).FirstOrDefaultAsync();
+        if(SingleAsset is not null)
+        {
+            //User AssetUser = await _userManager.FindByNameAsync(SingleAsset.Name);
+            //if(AssetUser is not null)
+            //{
+            //    HttpRequestMessage Request = new HttpRequestMessage()
+            //    {
+            //        Method = HttpMethod.Post,
+            //        RequestUri = new Uri("https://ControlSharp-Api/login"),
+            //    };
+
+            //    Request.Content = JsonContent.Create("");
+            //How To Get Token???
+
+            }
+            else
+            {
+                _logger.LogWarning($"An registered Client requested an token but no User is associated with the Asset (Name: {SingleAsset.Name}, IP: {Connection.RemoteIpAddress}, Hash: {Hash}, ConnectionID: {Context.ConnectionId})");
+            }
+
+        }
+        else
+        {
+            _logger.LogInformation($"An Client want to get an Token which is not registerd (IP: {Connection.RemoteIpAddress}, Hash: {Hash}, ConnectionID: {Context.ConnectionId})");
+        }
+    }
 }
