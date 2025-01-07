@@ -47,16 +47,6 @@ public class SignalRService : BackgroundService
             Environment.Exit(0);
         });
 
-        _assetHub.On("SetPassword", (string Password) =>
-        {
-            _password = new SecureString();
-
-            foreach (char SingleChar in Password.ToCharArray())
-            {
-                _password.AppendChar(SingleChar);
-    }
-        });
-
         _assetHub.On("CreateConnectingToMain", (string ID) =>
         {
             _connectionId = ID;
