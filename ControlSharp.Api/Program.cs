@@ -22,6 +22,7 @@ Builder.AddDatabase();
 Builder.Services.AddControllers();
 Builder.Services.AddEndpointsApiExplorer();
 Builder.Services.AddSwaggerGen();
+Builder.Services.AddHttpClient();
 Builder.Services.AddSignalR(option =>
     {
         option.AddFilter<GeneralHubFilter>();
