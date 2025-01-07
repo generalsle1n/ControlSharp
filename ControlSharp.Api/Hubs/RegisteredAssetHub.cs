@@ -22,6 +22,4 @@ public class RegisteredAssetHub : Hub<IRegisteredAssetClient>
         _context = context;
         _signInManager = signInManager;
     }
-    
-
 }
