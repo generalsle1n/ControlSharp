@@ -1,6 +1,8 @@
 ﻿using ControlSharp.Api.Hubs.Interfaces;
 using ControlSharp.Database.Identity;
 using ControlSharp.Database.Identity.Model;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,12 +13,18 @@ public class QuarantineAssetHub : Hub<IQuarantineAssetAction>
     private readonly ILogger<QuarantineAssetHub> _logger;
     private readonly IConfiguration _configuration;
     private DatabaseContext _context;
+    private SignInManager<User> _signInManager;
+    private UserManager<User> _userManager;
+    private HttpClient _client;
     
-    public QuarantineAssetHub(ILogger<QuarantineAssetHub> logger, IConfiguration configuration, DatabaseContext context)
+    public QuarantineAssetHub(ILogger<QuarantineAssetHub> logger, IConfiguration configuration, DatabaseContext context, SignInManager<User> signInManager, UserManager<User> userManager, HttpClient client)
     {
         _logger = logger;
         _configuration = configuration;
         _context = context;
+        _signInManager = signInManager;
+        _userManager = userManager;
+        _client = client;
     }
     
     public async Task Register(string Hash, string Hostname)
