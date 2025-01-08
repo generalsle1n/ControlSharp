@@ -1,4 +1,7 @@
-using ControlSharp.Identity.Database;
+using ControlSharp.Identity.Config.Clients;
+using ControlSharp.Identity.Config.IdentityResourcesConfig;
+using ControlSharp.Identity.Config.Scopes;
+using Duende.IdentityServer.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ControlSharp.Identity
