@@ -3,8 +3,19 @@ using Projects;
 
 IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(args);
 
+string ControlSharpUiOICDIdToken = "ControlSharpUiOICDId";
+string ControlSharpUiOICDSecretToken = "ControlSharpUiOICDSecret";
+string ControlSharpUiServerToken = "ControlSharpUiServer";
+string ControlSharpUiOICDId = Guid.NewGuid().ToString();
+string ControlSharpUiOICDSecret = Guid.NewGuid().ToString();
+
+IResourceBuilder<ParameterResource> ControlSharpUiOICDIdParameter = builder.AddParameter(ControlSharpUiOICDIdToken, ControlSharpUiOICDId);
+IResourceBuilder<ParameterResource> ControlSharpUiOICDSecretParameter = builder.AddParameter(ControlSharpUiOICDSecretToken, ControlSharpUiOICDSecret);
+
 IResourceBuilder<ProjectResource> ControlIdentity = builder.AddProject<ControlSharp_Identity>("ControlSharp-Identity")
-    .WithReplicas(builder.Configuration.GetValue<int>("Replicas"));
+    .WithReplicas(builder.Configuration.GetValue<int>("Replicas"))
+    .WithEnvironment(ControlSharpUiOICDIdToken, ControlSharpUiOICDIdParameter)
+    .WithEnvironment(ControlSharpUiOICDSecretToken, ControlSharpUiOICDSecretParameter);
 
 IResourceBuilder<ProjectResource> ControlApi = builder.AddProject<ControlSharp_Api>("ControlSharp-Api")
     .WithReplicas(builder.Configuration.GetValue<int>("Replicas"))
@@ -15,6 +26,8 @@ IResourceBuilder<ProjectResource> ControlUi = builder.AddProject<ControlSharp_Ui
     .WithReplicas(builder.Configuration.GetValue<int>("Replicas"))
     .WithReference(ControlApi)
     .WithReference(ControlIdentity)
+    .WithEnvironment(ControlSharpUiOICDIdToken, ControlSharpUiOICDIdParameter)
+    .WithEnvironment(ControlSharpUiOICDSecretToken, ControlSharpUiOICDSecretParameter)
     .WaitFor(ControlApi)
     .WaitFor(ControlIdentity);
 
