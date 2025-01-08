@@ -26,29 +26,15 @@ namespace ControlSharp.Identity
             // uncomment if you want to add a UI
             //builder.Services.AddRazorPages();
 
-            string ApplicationFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            List<Client> AllClients = ClientGenerator.CreateClients(Builder.Configuration);
            
             Builder.Services.AddIdentityServer(options =>
             {
                 options.EmitStaticAudienceClaim = true;
-            }).AddConfigurationStore(options =>
-            {
-                options.ConfigureDbContext = (db) =>
-                {
-                    string DatabasePath = Path.Combine(ApplicationFolder, _configDataBaseName);
-                    db.UseSqlite($"DataSource={DatabasePath};Cache=Shared");
-                };
-            }).AddOperationalStore(options =>
-            {
-                options.ConfigureDbContext = (db) =>
-                {
-                    string DatabasePath = Path.Combine(ApplicationFolder, _operationDataBaseName);
-                    db.UseSqlite($"DataSource={DatabasePath};Cache=Shared");
-                };
-            });
-            //.AddInMemoryIdentityResources(Config.IdentityResources)
-            //.AddInMemoryApiScopes(Config.ApiScopes)
-            //.AddInMemoryClients(Config.Clients);
+            })
+            .AddInMemoryClients(AllClients)
+            .AddInMemoryApiScopes(AllScopes.AppScopes)
+            .AddInMemoryIdentityResources(AllIdentityResources.Resources);
 
             WebApplication app = Builder.Build();
 
