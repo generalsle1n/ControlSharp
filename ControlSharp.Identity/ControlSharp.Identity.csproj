@@ -18,8 +18,4 @@
     <ProjectReference Include="..\ControlSharp.Mgmt.Service\ControlSharp.Mgmt.Service.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Config\Client\" />
-  </ItemGroup>
-
 </Project>
