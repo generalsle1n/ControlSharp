@@ -58,9 +58,6 @@ namespace ControlSharp.Identity
             //app.UseAuthorization();
             //app.MapRazorPages().RequireAuthorization();
 
-            DatabaseHelper DatabaseHelper = new DatabaseHelper();
-            DatabaseHelper.CheckDatabase(app);
-
             app.UseHttpsRedirection();
 
             app.Run();
