@@ -31,6 +31,9 @@ IResourceBuilder<ProjectResource> ControlUi = builder.AddProject<ControlSharp_Ui
     .WaitFor(ControlApi)
     .WaitFor(ControlIdentity);
 
+ControlIdentity.WithReference(ControlUi);
+ControlIdentity.WithEnvironment(ControlSharpUiServerToken, ControlUi.GetEndpoint("https"));
+
 builder.AddProject<ControlSharp_Client>("ControlSharp-Client")
     .WaitFor(ControlUi)
     .WithEnvironment("server", ControlApi.GetEndpoint("https"));
