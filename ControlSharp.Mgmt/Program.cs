@@ -6,6 +6,7 @@ IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(ar
 string ControlSharpUiOICDIdToken = "ControlSharpUiOICDId";
 string ControlSharpUiOICDSecretToken = "ControlSharpUiOICDSecret";
 string ControlSharpUiServerToken = "ControlSharpUiServer";
+string ControlSharpIdentityServerToken = "ControlSharpIdentityServer";
 string ControlSharpUiOICDId = Guid.NewGuid().ToString();
 string ControlSharpUiOICDSecret = Guid.NewGuid().ToString();
 
@@ -28,6 +29,7 @@ IResourceBuilder<ProjectResource> ControlUi = builder.AddProject<ControlSharp_Ui
     .WithReference(ControlIdentity)
     .WithEnvironment(ControlSharpUiOICDIdToken, ControlSharpUiOICDIdParameter)
     .WithEnvironment(ControlSharpUiOICDSecretToken, ControlSharpUiOICDSecretParameter)
+    .WithEnvironment(ControlSharpIdentityServerToken, ControlIdentity.GetEndpoint("https"))
     .WaitFor(ControlApi)
     .WaitFor(ControlIdentity);
 
