@@ -7,7 +7,8 @@ namespace ControlSharp.Identity.Config.IdentityResourcesConfig
         internal static List<IdentityResource> Resources = new List<IdentityResource>()
         {
             new IdentityResources.OpenId(),
-            new IdentityResources.Profile()
+            new IdentityResources.Profile(),
+            new IdentityResources.Address(),
         };
     }
 }
