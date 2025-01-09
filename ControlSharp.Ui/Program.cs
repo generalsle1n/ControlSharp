@@ -14,20 +14,32 @@ builder.AddServiceDefaults();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddHttpClient();
 
-builder.Services.AddAuthentication(option =>
+builder.Services.AddAuthentication(options =>
 {
+    options.DefaultScheme = "Cookies";
+    options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+})
+.AddCookie("Cookies")
+.AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
+{
+    options.Authority = builder.Configuration.GetValue<string>("ControlSharpIdentityServer");
     
+    options.ClientId = builder.Configuration.GetValue<string>("ControlSharpUiOICDId");
+    options.ClientSecret = builder.Configuration.GetValue<string>("ControlSharpUiOICDSecret");
+    options.ResponseType = "code";
+
+    options.Scope.Clear();
+    options.Scope.Add("openid");
+    options.Scope.Add("profile");
+
+    options.GetClaimsFromUserInfoEndpoint = true;
+    
+    options.MapInboundClaims = false; // Don't rename claim types
+
+    options.SaveTokens = true;
 });
 
-builder.Services.AddAuthorization(option =>
-{
-    option.AddPolicy(AccessRole.Super.ToString(), policy =>
-    {
-        policy.RequireRole(AccessRole.Super.ToString());
-    });
-});
-
-builder.Services.AddDefaultIdentity<User>()
+builder.Services.AddAuthorization();
     .AddSignInManager<SignInManager<User>>()
     .AddRoles<Role>()
     .AddEntityFrameworkStores<DatabaseContext>();
