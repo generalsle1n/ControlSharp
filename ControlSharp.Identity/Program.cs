@@ -34,7 +34,11 @@ namespace ControlSharp.Identity
             })
             .AddInMemoryClients(AllClients)
             .AddInMemoryApiScopes(AllScopes.AppScopes)
-            .AddInMemoryIdentityResources(AllIdentityResources.Resources);
+            .AddInMemoryIdentityResources(AllIdentityResources.Resources)
+            .AddInMemoryPersistedGrants()
+            .AddInMemoryPushedAuthorizationRequests()
+            .AddTestUsers(TestUsers.Users)
+            .AddServerSideSessions();
 
             WebApplication app = Builder.Build();
 
