@@ -24,7 +24,7 @@ namespace ControlSharp.Identity
 
             //IdentityServer
             // uncomment if you want to add a UI
-            //builder.Services.AddRazorPages();
+            Builder.Services.AddRazorPages();
 
             List<Client> AllClients = ClientGenerator.CreateClients(Builder.Configuration);
            
@@ -55,8 +55,8 @@ namespace ControlSharp.Identity
             app.UseIdentityServer();
 
             // uncomment if you want to add a UI
-            //app.UseAuthorization();
-            //app.MapRazorPages().RequireAuthorization();
+            app.UseAuthorization();
+            app.MapRazorPages().RequireAuthorization();
 
             app.UseHttpsRedirection();
 
