@@ -1,5 +1,6 @@
 using ControlSharp.Database.Identity;
 using ControlSharp.Database.Identity.Model;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +14,7 @@ builder.AddServiceDefaults();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddHttpClient();
+builder.Services.AddRazorPages();
 
 builder.Services.AddAuthentication(options =>
 {
