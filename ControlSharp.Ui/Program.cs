@@ -40,15 +40,11 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddAuthorization();
-    .AddSignInManager<SignInManager<User>>()
-    .AddRoles<Role>()
-    .AddEntityFrameworkStores<DatabaseContext>();
 
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
-app.MapIdentityApi<User>();
-app.InitializeDatabase();
+
 //Aspire
 app.MapDefaultEndpoints();
 if (app.Environment.IsDevelopment())
