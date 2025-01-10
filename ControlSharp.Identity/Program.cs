@@ -36,6 +36,16 @@ namespace ControlSharp.Identity
 
                 option.UseSqlite($"DataSource={DatabasePath};Cache=Shared");
             });
+
+            Builder.Services.AddIdentity<UserIdentity, IdentityRole>(option =>
+            {
+                option.Password.RequiredLength = 10;
+                option.Password.RequireNonAlphanumeric = true;
+                option.Password.RequireLowercase = true;
+            })
+            .AddEntityFrameworkStores<IdentityDatabaseContext>()
+            .AddDefaultTokenProviders();
+            
             List<Client> AllClients = ClientGenerator.CreateClients(Builder.Configuration);
            
             Builder.Services.AddIdentityServer(options =>
