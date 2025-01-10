@@ -10,10 +10,12 @@ namespace ControlSharp.Identity.Config.Clients
         {
             ClientName = _name,
             AllowedGrantTypes = GrantTypes.Code,
+            RequirePkce = true,
             AllowedScopes =
             {
                 IdentityServerConstants.StandardScopes.OpenId,
-                IdentityServerConstants.StandardScopes.Profile
+                IdentityServerConstants.StandardScopes.Profile,
+                "roles"
             }
         };
     }
