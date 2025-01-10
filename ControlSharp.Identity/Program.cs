@@ -15,7 +15,7 @@ namespace ControlSharp.Identity
         private const string _configDataBaseName = "ControlSharpConfig.db";
         private const string _operationDataBaseName = "ControlSharpOperation.db";
 
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             WebApplicationBuilder Builder = WebApplication.CreateBuilder(args);
 
@@ -67,8 +67,7 @@ namespace ControlSharp.Identity
             app.MapRazorPages().RequireAuthorization();
 
             app.UseHttpsRedirection();
-
-            app.Run();
+            await app.RunAsync();
         }
     }
 }
