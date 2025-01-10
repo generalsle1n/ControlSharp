@@ -12,8 +12,7 @@ namespace ControlSharp.Identity
 {
     public class Program
     {
-        private const string _configDataBaseName = "ControlSharpConfig.db";
-        private const string _operationDataBaseName = "ControlSharpOperation.db";
+        private const string _configDataBaseName = "Identity.db";
 
         public static async Task Main(string[] args)
         {
@@ -30,6 +29,13 @@ namespace ControlSharp.Identity
             // uncomment if you want to add a UI
             Builder.Services.AddRazorPages();
 
+            Builder.Services.AddDbContext<IdentityDatabaseContext>(option =>
+            {
+                string FolderPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                string DatabasePath = Path.Combine(FolderPath, _configDataBaseName);
+
+                option.UseSqlite($"DataSource={DatabasePath};Cache=Shared");
+            });
             List<Client> AllClients = ClientGenerator.CreateClients(Builder.Configuration);
            
             Builder.Services.AddIdentityServer(options =>
@@ -47,6 +53,9 @@ namespace ControlSharp.Identity
             WebApplication app = Builder.Build();
 
             app.MapDefaultEndpoints();
+
+            //CreateDatabase
+            await app.GenerateDatabase();
 
             if (app.Environment.IsDevelopment())
             {
