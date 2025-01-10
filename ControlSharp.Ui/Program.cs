@@ -1,5 +1,6 @@
 using ControlSharp.Database.Identity;
 using ControlSharp.Database.Identity.Model;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,10 @@ builder.Services.AddAuthentication(options =>
     options.Scope.Clear();
     options.Scope.Add("openid");
     options.Scope.Add("profile");
+    options.Scope.Add("roles");
+
+    options.ClaimActions.MapJsonKey("role", "role", "role");
+    options.TokenValidationParameters.RoleClaimType = "role";
 
     options.GetClaimsFromUserInfoEndpoint = true;
     
