@@ -51,14 +51,19 @@ namespace ControlSharp.Identity
             Builder.Services.AddIdentityServer(options =>
             {
                 options.EmitStaticAudienceClaim = true;
+
+                options.Events.RaiseErrorEvents = true;
+                options.Events.RaiseInformationEvents = true;
+                options.Events.RaiseFailureEvents = true;
+                options.Events.RaiseSuccessEvents = true;
             })
             .AddInMemoryClients(AllClients)
             .AddInMemoryApiScopes(AllScopes.AppScopes)
             .AddInMemoryIdentityResources(AllIdentityResources.Resources)
             .AddInMemoryPersistedGrants()
             .AddInMemoryPushedAuthorizationRequests()
-            .AddTestUsers(TestUsers.Users)
-            .AddServerSideSessions();
+            .AddServerSideSessions()
+            .AddAspNetIdentity<UserIdentity>();
 
             WebApplication app = Builder.Build();
 
