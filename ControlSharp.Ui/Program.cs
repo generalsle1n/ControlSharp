@@ -36,6 +36,7 @@ builder.Services.AddAuthentication(options =>
     options.Scope.Add("openid");
     options.Scope.Add("profile");
     options.Scope.Add("roles");
+    options.Scope.Add("ControlSharp-Api");
 
     options.ClaimActions.MapJsonKey("role", "role", "role");
     options.TokenValidationParameters.RoleClaimType = "role";
