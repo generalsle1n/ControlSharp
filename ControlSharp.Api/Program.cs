@@ -97,4 +97,4 @@ app.MapHub<RegisteredAssetHub>($"/{app.Configuration.GetValue<string>("AssetHubI
 
 app.MapControllers();
 
-app.Run();
+await app.RunAsync();
