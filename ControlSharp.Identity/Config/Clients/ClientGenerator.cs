@@ -7,7 +7,13 @@ namespace ControlSharp.Identity.Config.Clients
         internal static List<Client> CreateClients(IConfiguration configuration)
         {
             List<Client> Result = new List<Client>();
+            Result.Add(CreateUiClient(configuration));
             Result.Add(CreateApiClient(configuration));
+            return Result;
+        }
+
+        private static Client CreateUiClient(IConfiguration configuration)
+        {
             Client ControlSharpUi = ControlSharpUiClient.Client;
             ControlSharpUi.ClientId = configuration.GetValue<string>("ControlSharpUiOICDId");
             ControlSharpUi.ClientSecrets = new List<Secret>()
@@ -24,8 +30,9 @@ namespace ControlSharp.Identity.Config.Clients
                 $"{configuration.GetValue<string>("ControlSharpUiServer")}/signout-callback-oidc"
             };
 
-            Result.Add(ControlSharpUi);
-            return Result;
+            return ControlSharpUi;
+        }
+
         private static Client CreateApiClient(IConfiguration configuration)
         {
             Client ControlSharpApi = ControlSharpApiClient.Client;
