@@ -7,6 +7,7 @@ namespace ControlSharp.Identity.Config.Clients
         internal static List<Client> CreateClients(IConfiguration configuration)
         {
             List<Client> Result = new List<Client>();
+            Result.Add(CreateApiClient(configuration));
             Client ControlSharpUi = ControlSharpUiClient.Client;
             ControlSharpUi.ClientId = configuration.GetValue<string>("ControlSharpUiOICDId");
             ControlSharpUi.ClientSecrets = new List<Secret>()
@@ -25,6 +26,14 @@ namespace ControlSharp.Identity.Config.Clients
 
             Result.Add(ControlSharpUi);
             return Result;
+        private static Client CreateApiClient(IConfiguration configuration)
+        {
+            Client ControlSharpApi = ControlSharpApiClient.Client;
+            
+            ControlSharpApi.AllowedScopes.Add(configuration.GetValue<string>("ControlSharpApiOICDId"));
+            ControlSharpApi.ClientId = configuration.GetValue<string>("ControlSharpApiOICDId");
+
+            return ControlSharpApi;
         }
     }
 }
