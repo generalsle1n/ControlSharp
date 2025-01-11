@@ -15,7 +15,8 @@ namespace ControlSharp.Identity.Config.Clients
             {
                 IdentityServerConstants.StandardScopes.OpenId,
                 IdentityServerConstants.StandardScopes.Profile,
-                "roles"
+                "roles",
+                "ControlSharp-Api"
             }
         };
     }
