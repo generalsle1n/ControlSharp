@@ -1,3 +1,4 @@
+using ControlSharp.Identity.Config.ApiResourceConfig;
 using ControlSharp.Identity.Config.Clients;
 using ControlSharp.Identity.Config.IdentityResourcesConfig;
 using ControlSharp.Identity.Config.Scopes;
@@ -48,6 +49,7 @@ namespace ControlSharp.Identity
             .AddDefaultTokenProviders();
             
             List<Client> AllClients = ClientGenerator.CreateClients(Builder.Configuration);
+            List<ApiResource> AllApiResource = ApiResourceGenerator.CreateClients(Builder.Configuration);
            
             Builder.Services.AddIdentityServer(options =>
             {
@@ -60,6 +62,7 @@ namespace ControlSharp.Identity
             })
             .AddInMemoryClients(AllClients)
             .AddInMemoryApiScopes(AllScopes.AppScopes)
+            .AddInMemoryApiResources(AllApiResource)
             .AddInMemoryIdentityResources(AllIdentityResources.Resources)
             .AddInMemoryPersistedGrants()
             .AddInMemoryPushedAuthorizationRequests()
