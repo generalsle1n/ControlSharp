@@ -45,7 +45,17 @@ Builder.Configuration.AddInMemoryCollection(new List<KeyValuePair<string, string
 //     Config.WriteTo.File(path: FolderPath);
 // });
 
+string Authority = Builder.Configuration.GetValue<string>("ControlSharpIdentityServer");
+string ClientId = Builder.Configuration.GetValue<string>("ControlSharpApiOICDId");
+string ClientSecret = Builder.Configuration.GetValue<string>("ControlSharpApiOICDSecret");
+
+Builder.Services.AddAuthentication()
+    .AddOAuth2Introspection(async options =>
 {
+        options.Authority = Authority;
+        options.ClientId = ClientId;
+        options.ClientSecret = ClientSecret;
+    });
     
 });
 
