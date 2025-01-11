@@ -46,7 +46,28 @@ builder.Services.AddAuthentication(options =>
     options.SaveTokens = true;
 });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(nameof(Roles.ControlSharpApi_Super_Write), policy =>
+    {
+        policy.RequireRole(nameof(Roles.ControlSharpApi_Super_Write));
+    });
+
+    options.AddPolicy(nameof(Roles.ControlSharpApi_Super_Read), policy =>
+    {
+        policy.RequireRole(nameof(Roles.ControlSharpApi_Super_Read), nameof(Roles.ControlSharpApi_Super_Write));
+    });
+
+    options.AddPolicy(nameof(Roles.ControlSharpApi_Asset_Write), policy =>
+    {
+        policy.RequireRole(nameof(Roles.ControlSharpApi_Asset_Write));
+    });
+
+    options.AddPolicy(nameof(Roles.ControlSharpApi_Asset_Read), policy =>
+    {
+        policy.RequireRole(nameof(Roles.ControlSharpApi_Asset_Read));
+    });
+});
 
 builder.Services.AddControllersWithViews();
 
