@@ -42,6 +42,7 @@ namespace ControlSharp.Identity
                 option.Password.RequiredLength = 10;
                 option.Password.RequireNonAlphanumeric = true;
                 option.Password.RequireLowercase = true;
+                option.Password.RequireUppercase = false;
             })
             .AddEntityFrameworkStores<IdentityDatabaseContext>()
             .AddDefaultTokenProviders();
