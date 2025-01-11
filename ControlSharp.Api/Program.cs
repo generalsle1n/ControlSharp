@@ -11,7 +11,6 @@ WebApplicationBuilder Builder = WebApplication.CreateBuilder(args);
 
 //For Aspire
 Builder.AddServiceDefaults();
-Builder.AddDatabase();
 
 Builder.Services.AddControllers();
 Builder.Services.AddEndpointsApiExplorer();
@@ -82,7 +81,7 @@ MapApiFeatures Feature = new MapApiFeatures()
 app.MapIdentityApiRaw<User>(Feature);
 
 app.MapDefaultEndpoints();
-app.InitializeDatabase(CreateDatabase: true);
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
