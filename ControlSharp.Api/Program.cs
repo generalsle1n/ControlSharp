@@ -1,19 +1,9 @@
-using System.Reflection;
-using ControlSharp.Database;
-using ControlSharp.Database.Identity.Model;
-using ControlSharp.Api.Extension;
-//using ControlSharp.Api.Services;
-using Microsoft.EntityFrameworkCore;
-using ControlSharp.Api.Hubs;
+using ControlSharp.Api.Database;
 using ControlSharp.Api.Hubs.Filter;
-using ControlSharp.Database.Identity;
-using ControlSharp.Database.Identity.Model;
-using Microsoft.AspNetCore.Identity;
+using ControlSharp.Model.Identity.Role;
 using Microsoft.AspNetCore.SignalR;
-using Serilog;
-using Serilog.Events;
-using ControlSharp.Database.Identity;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 const string _configDataBaseName = "Data.db";
 

@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ControlSharp.Model.Database.Assets;
-using System.Runtime.CompilerServices;
 
 namespace ControlSharp.Api.Database
 {
