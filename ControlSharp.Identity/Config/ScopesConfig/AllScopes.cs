@@ -6,7 +6,7 @@ namespace ControlSharp.Identity.Config.Scopes
     {
         internal static List<ApiScope> AppScopes = new List<ApiScope>()
         {
-            new ApiScope(name: "ControlSharp.Api.Asset.Read", "Asset Read")
+            new ApiScope(name: "ControlSharp-Api")
         };
     }
 }
