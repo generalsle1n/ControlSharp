@@ -1,5 +1,6 @@
 ﻿using ControlSharp.Identity.Identity.CustomClaim;
 using ControlSharp.Identity.Identity.User;
+using ControlSharp.Model.Identity.Role;
 using IdentityModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
@@ -34,8 +35,6 @@ namespace ControlSharp.Identity.Identity.Database
                         
                         IdentityResult Result = await UserManager.CreateAsync(Admin, DefaultPassword);
 
-                        await UserManager.AddClaimAsync(Admin, new Claim(JwtClaimTypes.Role, nameof(Roles.ControlSharpApi_Super)));
-
                         if (Result.Succeeded)
                         {
                             App.Logger.LogInformation($"Admin Created: {_adminUserName} - {DefaultPassword}");
@@ -66,17 +65,17 @@ namespace ControlSharp.Identity.Identity.Database
                                 }
                             }
 
-                            IdentityResult UserRoleResult = await UserManager.AddToRoleAsync(Admin, nameof(Roles.ControlSharpApi_Super));
-                            await UserManager.AddToRoleAsync(Admin, nameof(Roles.ControlSharpApi_Asset_Write));
+                            IdentityResult UserRoleResult = await UserManager.AddToRoleAsync(Admin, nameof(Roles.ControlSharpApi_Super_Write));
+                            
                             if (UserRoleResult.Succeeded)
                             {
-                                App.Logger.LogInformation($"Added {Admin.UserName} to {nameof(Roles.ControlSharpApi_Super)}");
+                                App.Logger.LogInformation($"Added {Admin.UserName} to {nameof(Roles.ControlSharpApi_Super_Write)}");
                             }
                             else
                             {
                                 foreach(IdentityError SingleError in UserRoleResult.Errors)
                                 {
-                                    App.Logger.LogCritical($"Unable to Add {Admin.UserName} to {nameof(Roles.ControlSharpApi_Super)} because {SingleError.Code}");
+                                    App.Logger.LogCritical($"Unable to Add {Admin.UserName} to {nameof(Roles.ControlSharpApi_Super_Write)} because {SingleError.Code}");
                                 }
                             }
                         }
