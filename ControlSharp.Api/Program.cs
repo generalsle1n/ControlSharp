@@ -63,7 +63,7 @@ Builder.Services.AddIdentityApiEndpoints<User>()
     .AddEntityFrameworkStores<DatabaseContext>();
 
 var app = Builder.Build();
-
+await app.CheckDatabaseAsync();
 MapApiFeatures Feature = new MapApiFeatures()
 {
     Info = false,
@@ -78,7 +78,6 @@ MapApiFeatures Feature = new MapApiFeatures()
     ResendConfirmMail = false,
 };
 
-app.MapIdentityApiRaw<User>(Feature);
 
 app.MapDefaultEndpoints();
 
