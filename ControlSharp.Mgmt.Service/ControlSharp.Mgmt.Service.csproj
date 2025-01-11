@@ -18,8 +18,4 @@
         <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" Version="1.10.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\ControlSharp.Database\ControlSharp.Database.csproj" />
-    </ItemGroup>
-
 </Project>
