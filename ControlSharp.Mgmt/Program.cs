@@ -3,6 +3,15 @@ using Projects;
 
 IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(args);
 
+string ControlSharpApiOICDIdToken = "ControlSharpApiOICDId";
+string ControlSharpApiOICDSecretToken = "ControlSharpApiOICDSecret";
+string ControlSharpApiServerToken = "ControlSharpApiServer";
+string ControlSharpApiOICDId = Guid.NewGuid().ToString();
+string ControlSharpApiOICDSecret = Guid.NewGuid().ToString();
+
+IResourceBuilder<ParameterResource> ControlSharpApiOICDIdParameter = builder.AddParameter(ControlSharpApiOICDIdToken, ControlSharpApiOICDId);
+IResourceBuilder<ParameterResource> ControlSharpApiOICDSecretParameter = builder.AddParameter(ControlSharpApiOICDSecretToken, ControlSharpApiOICDSecret);
+
 string ControlSharpUiOICDIdToken = "ControlSharpUiOICDId";
 string ControlSharpUiOICDSecretToken = "ControlSharpUiOICDSecret";
 string ControlSharpUiServerToken = "ControlSharpUiServer";
@@ -15,18 +24,24 @@ IResourceBuilder<ParameterResource> ControlSharpUiOICDSecretParameter = builder.
 
 IResourceBuilder<ProjectResource> ControlIdentity = builder.AddProject<ControlSharp_Identity>("ControlSharp-Identity")
     .WithReplicas(builder.Configuration.GetValue<int>("Replicas"))
+    .WithEnvironment(ControlSharpApiOICDIdToken, ControlSharpApiOICDIdParameter)
+    .WithEnvironment(ControlSharpApiOICDSecretToken, ControlSharpApiOICDSecretParameter)
     .WithEnvironment(ControlSharpUiOICDIdToken, ControlSharpUiOICDIdParameter)
     .WithEnvironment(ControlSharpUiOICDSecretToken, ControlSharpUiOICDSecretParameter);
 
 IResourceBuilder<ProjectResource> ControlApi = builder.AddProject<ControlSharp_Api>("ControlSharp-Api")
     .WithReplicas(builder.Configuration.GetValue<int>("Replicas"))
     .WithReference(ControlIdentity)
+    .WithEnvironment(ControlSharpApiOICDIdToken, ControlSharpApiOICDIdParameter)
+    .WithEnvironment(ControlSharpApiOICDSecretToken, ControlSharpApiOICDSecretParameter)
+    .WithEnvironment(ControlSharpIdentityServerToken, ControlIdentity.GetEndpoint("https"))
     .WaitFor(ControlIdentity);
 
 IResourceBuilder<ProjectResource> ControlUi = builder.AddProject<ControlSharp_Ui>("ControlSharp-Ui")
     .WithReplicas(builder.Configuration.GetValue<int>("Replicas"))
     .WithReference(ControlApi)
     .WithReference(ControlIdentity)
+    .WithEnvironment(ControlSharpApiOICDIdToken, ControlSharpApiOICDIdParameter)
     .WithEnvironment(ControlSharpUiOICDIdToken, ControlSharpUiOICDIdParameter)
     .WithEnvironment(ControlSharpUiOICDSecretToken, ControlSharpUiOICDSecretParameter)
     .WithEnvironment(ControlSharpIdentityServerToken, ControlIdentity.GetEndpoint("https"))
