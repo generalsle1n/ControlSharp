@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ControlSharp.Ui.Controllers.Asset;
 
+[Authorize(Policy = nameof(Roles.ControlSharpApi_Super_Read))]
 public class AssetController : Controller
 {
     private readonly ILogger<AssetController> _logger;
