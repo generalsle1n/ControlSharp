@@ -21,6 +21,5 @@
     <ProjectReference Include="..\ControlSharp.Mgmt.Service\ControlSharp.Mgmt.Service.csproj" />
     <ProjectReference Include="..\ControlSharp.Model\ControlSharp.Model.csproj" />
   </ItemGroup>
-  </ItemGroup>
 
 </Project>
