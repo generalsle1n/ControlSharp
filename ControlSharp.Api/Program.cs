@@ -15,7 +15,7 @@ using Serilog.Events;
 using ControlSharp.Database.Identity;
 using Microsoft.AspNetCore.Identity;
 
-const string DatabaseConnection = "DefaultConnection";
+const string _configDataBaseName = "Data.db";
 
 WebApplicationBuilder Builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +31,14 @@ Builder.Services.AddSignalR(option =>
         option.AddFilter<GeneralHubFilter>();
     })
     .AddMessagePackProtocol();
+Builder.Services.AddDbContext<DatabaseContext>(options =>
+{
+    string FolderPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+    string DatabasePath = Path.Combine(FolderPath, _configDataBaseName);
+
+    options.UseSqlite($"DataSource={DatabasePath};Cache=Shared");
+});
+
 
 Builder.Configuration.AddInMemoryCollection(new List<KeyValuePair<string, string?>>()
 {
