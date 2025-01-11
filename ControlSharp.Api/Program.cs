@@ -44,7 +44,7 @@ Builder.Configuration.AddInMemoryCollection(new List<KeyValuePair<string, string
 //     Config.WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Information);
 //     Config.WriteTo.File(path: FolderPath);
 // });
-Builder.Services.AddAuthentication(option =>
+
 {
     
 });
@@ -57,26 +57,8 @@ Builder.Services.AddAuthorization(option =>
     });
 });
 
-Builder.Services.AddIdentityApiEndpoints<User>()
-    .AddSignInManager<SignInManager<User>>()
-    .AddRoles<Role>()
-    .AddEntityFrameworkStores<DatabaseContext>();
-
 var app = Builder.Build();
 await app.CheckDatabaseAsync();
-MapApiFeatures Feature = new MapApiFeatures()
-{
-    Info = false,
-    Login = true,
-    Manage = false,
-    Refresh = false,
-    Register = false,
-    ConfirmMail = false,
-    ForgotPassword = false,
-    ResetPassword = false,
-    TwoFactor = false,
-    ResendConfirmMail = false,
-};
 
 
 app.MapDefaultEndpoints();
