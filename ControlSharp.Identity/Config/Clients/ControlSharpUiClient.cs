@@ -11,6 +11,7 @@ namespace ControlSharp.Identity.Config.Clients
             ClientName = _name,
             AllowedGrantTypes = GrantTypes.Code,
             RequirePkce = true,
+            UpdateAccessTokenClaimsOnRefresh = true,
             AllowedScopes =
             {
                 IdentityServerConstants.StandardScopes.OpenId,
