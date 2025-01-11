@@ -18,6 +18,7 @@ namespace ControlSharp.Identity.Identity.Database
                 App.Logger.LogInformation("Check if Database is found");
 
                 await DatabaseContext.Database.EnsureDeletedAsync();
+                
                 bool Created = await DatabaseContext.Database.EnsureCreatedAsync();
 
                 if (Created)
