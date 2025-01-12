@@ -1,0 +1,21 @@
+﻿@using System.Security.Claims
+@model UserProperty
+<h2>Claims</h2>
+
+<dl>
+    @foreach (KeyValuePair<string, string> SingleClaim in Model.Claims)
+    {
+        <dt>@SingleClaim.Key</dt>
+        <dd>@SingleClaim.Value</dd>
+    }
+</dl>
+
+<h2>Properties</h2>
+
+<dl>
+    @foreach (KeyValuePair<string, string> SingleProperty in Model.Properties)
+    {
+        <dt>@SingleProperty.Key</dt>
+        <dd>@SingleProperty.Value</dd>
+    } 
+</dl>

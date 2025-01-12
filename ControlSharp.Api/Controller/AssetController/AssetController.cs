@@ -1,9 +1,9 @@
+using ControlSharp.Api.Database;
 using ControlSharp.Api.Hubs;
 using ControlSharp.Api.Hubs.Interfaces;
-using ControlSharp.Database.Identity;
-using ControlSharp.Database.Identity.Model;
+using ControlSharp.Model.Database.Assets;
+using ControlSharp.Model.Identity.Role;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
@@ -12,8 +12,7 @@ namespace ControlSharp.Api.Controller.AssetController;
 [ApiController]
 [Route("api/v0.1/[controller]")]
 [Produces("application/json")]
-[Authorize(Policy = nameof(AccessRole.Asset))]
-
+[Authorize(Policy = nameof(Roles.ControlSharpApi_Super_Read))]
 public class AssetController : ControllerBase
 {
     private readonly DatabaseContext _context;
@@ -30,73 +29,82 @@ public class AssetController : ControllerBase
     }
     
     [HttpGet]
-    [Authorize(Policy  = nameof(AccessRole.Super))]
+    [Authorize(Policy = nameof(Roles.ControlSharpApi_Super_Read))]
     [Route("[action]")]
     public async Task<ActionResult<List<Asset>>> Registered()
     {
-        return _context.Asset.Where(asset => asset.Registered == true).ToList();
+        return _context.Assets.Where(asset => asset.Registered == true).ToList();
     }
     
     [HttpGet]
-    [Authorize(Policy  = nameof(AccessRole.Super))]
+    [Authorize(Policy = nameof(Roles.ControlSharpApi_Super_Write))]
     [Route("[action]")]
     public async Task<ActionResult<List<Asset>>> Unregistered()
     {
-        return _context.Asset.Where(asset => asset.Registered == false).ToList();
+        return _context.Assets.Where(asset => asset.Registered == false).ToList();
     }
 
     [HttpGet]
-    [Authorize(Policy = nameof(AccessRole.Super))]
+    [Authorize(Policy = nameof(Roles.ControlSharpApi_Super_Read))]
     [Route("{ID}")]
     public async Task<ActionResult<Asset>> GetAsset(Guid ID)
     {
-        Asset asset = await _context.Asset.FindAsync(ID);
+        Asset asset = await _context.Assets.FindAsync(ID);
         if (asset is not null)
         {
             return Ok(asset);
         }
         else
         {
+            _logger.LogWarning($"Asset requested but not exist ({ID})");
             return NotFound();
         }
     }
     
     [HttpPost]
-    [Authorize(Policy = nameof(AccessRole.Super))]
+    [Authorize(Policy = nameof(Roles.ControlSharpApi_Super_Write))]
     [Route("{ID}")]
     public async Task<ActionResult> CreateAsset(Guid ID, CancellationToken token)
     {
         try
         {
-            Asset asset = await _context.Asset.FindAsync(ID);
+            Asset asset = await _context.Assets.FindAsync(ID);
             if (asset is not null)
             {
                 asset.Registered = true;
+                asset.Banned = false;
                 await _context.SaveChangesAsync(token);
+                _logger.LogInformation($"Asset registerd {asset.Id}");
                 return Ok(asset);
             }
-            return NotFound();
+            else
+            {
+                _logger.LogWarning($"Requested to Register asset {ID} but not found");
+                return NotFound();
+            }
         }
         catch (Exception e)
         {
+            _logger.LogError(e, "Unable to register Asset");
             return StatusCode(500);
         }
     }
     
     [HttpDelete]
-    [Authorize(Policy = nameof(AccessRole.Super))]
+    [Authorize(Policy = nameof(Roles.ControlSharpApi_Super_Write))]
     [Route("{ID}")]
     public async Task<ActionResult> DeleteAsset(Guid ID, CancellationToken token)
     {
         try
         {
-            Asset asset = await _context.Asset.FindAsync(ID);
+            Asset asset = await _context.Assets.FindAsync(ID);
             if (asset is not null)
             {
                 if (asset.Banned != true)
                 {
+                    asset.Registered = false;
                     asset.Banned = true;
-                    _context.Asset.Update(asset);
+                    _context.Assets.Update(asset);
                     await _context.SaveChangesAsync(token);
                 }
                 
@@ -105,13 +113,20 @@ public class AssetController : ControllerBase
 
                 await QuarantineClient.DestroyAssetAsync();
                 await RegisteredClient.DestroyAssetAsync();
-                
+
+                _logger.LogInformation($"Deleted Asset {asset.Id}");
+
                 return Ok(asset);
             }
-            return NotFound();
+            else
+            {
+                _logger.LogWarning($"Requested to delete Asset ({ID}) but it dont exist");
+                return NotFound();
+            }
         }
         catch (Exception e)
         {
+            _logger.LogError(e, "Unable to delete Asset");
             return StatusCode(500);
         }
     }

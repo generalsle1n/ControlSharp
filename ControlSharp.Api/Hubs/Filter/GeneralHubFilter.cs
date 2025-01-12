@@ -1,5 +1,5 @@
 ﻿using ControlSharp.Api.Controller.AssetController;
-using ControlSharp.Database.Identity;
+using ControlSharp.Api.Database;
 using Microsoft.AspNetCore.SignalR;
 
 namespace ControlSharp.Api.Hubs.Filter;
@@ -14,6 +14,7 @@ public class GeneralHubFilter : IHubFilter
         _context = context;
         _logger = logger;
     }
+
     public Task OnConnectedAsync(HubLifetimeContext context, Func<HubLifetimeContext, Task> next)
     {
         return next(context);

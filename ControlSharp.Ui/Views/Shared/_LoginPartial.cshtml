@@ -1,27 +1,19 @@
-﻿@using ControlSharp.Database.Identity.Model
-@using Microsoft.AspNetCore.Identity
-@inject SignInManager<User> SignInManager
-@inject UserManager<User> UserManager
+﻿@using Microsoft.AspNetCore.Identity
 
 <ul class="navbar-nav">
-    @if (SignInManager.IsSignedIn(User))
+    @if (Context.User.Identity.IsAuthenticated)
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="OICDSession" asp-action="UserProfile" title="Manage">Hello @User.Claims.Where(claim => claim.Type.Equals("name")).FirstOrDefault().Value</a>
         </li>
         <li class="nav-item">
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new {area = ""})">
-                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-            </form>
+            <a class="nav-link text-dark" asp-area="" asp-controller="OICDSession" asp-action="Logoff">Logoff</a>
         </li>
     }
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="OICDSession" asp-action="Login">Login</a>
         </li>
     }
 </ul>

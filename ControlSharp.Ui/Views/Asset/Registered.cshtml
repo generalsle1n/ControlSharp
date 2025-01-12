@@ -1,8 +1,5 @@
 @using System.Text
-@using ControlSharp.Database.Identity.Model
-@using Microsoft.AspNetCore.Authentication
-@using Microsoft.AspNetCore.Identity
-@inject SignInManager<User> SignInManager
+@using ControlSharp.Model.Database.Assets
 @inject IHttpClientFactory ClientFactory
 @model IEnumerable<Asset>
 @{
@@ -17,6 +14,7 @@
             <th>LastOnline</th>
             <th>IP</th>
             <th>Created</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -27,7 +25,17 @@
             <td>@SingleAsset.Active</td>
             <td>@SingleAsset.LastOnline</td>
             <td>@SingleAsset.Ip</td>
-            <td>@SingleAsset.Created</td> 
+            <td>@SingleAsset.Created</td>
+            <td>
+                <div class="btn-group">
+                    <form asp-controller="Asset" asp-action="DeleteClient">
+                        <input type="hidden" name="Id" value="@SingleAsset.Id" />
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <span class="bi-ban" />
+                        </button>
+                    </form>
+                </div>
+            </td>
         </tr>
     }
     </tbody>
