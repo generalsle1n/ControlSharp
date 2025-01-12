@@ -14,7 +14,7 @@ namespace ControlSharp.Identity.Config.Clients
             AccessTokenType = AccessTokenType.Reference,
             AllowedScopes = new List<string>()
             {
-                //"ControlSharp-Api"
+                
             }
         };
     }
