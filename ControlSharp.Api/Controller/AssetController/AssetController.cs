@@ -72,6 +72,7 @@ public class AssetController : ControllerBase
             if (asset is not null)
             {
                 asset.Registered = true;
+                asset.Banned = false;
                 await _context.SaveChangesAsync(token);
                 _logger.LogInformation($"Asset registerd {asset.Id}");
                 return Ok(asset);
@@ -80,6 +81,7 @@ public class AssetController : ControllerBase
             {
                 _logger.LogWarning($"Requested to Register asset {ID} but not found");
             return NotFound();
+        }
         }
         catch (Exception e)
         {
@@ -100,6 +102,7 @@ public class AssetController : ControllerBase
             {
                 if (asset.Banned != true)
                 {
+                    asset.Registered = false;
                     asset.Banned = true;
                     _context.Assets.Update(asset);
                     await _context.SaveChangesAsync(token);
@@ -119,6 +122,7 @@ public class AssetController : ControllerBase
             {
                 _logger.LogWarning($"Requested to delete Asset ({ID}) but it dont exist");
             return NotFound();
+        }
         }
         catch (Exception e)
         {
