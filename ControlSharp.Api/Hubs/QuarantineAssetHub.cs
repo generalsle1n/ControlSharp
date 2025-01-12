@@ -1,6 +1,6 @@
-﻿using ControlSharp.Api.Hubs.Interfaces;
-using ControlSharp.Database.Identity;
-using ControlSharp.Database.Identity.Model;
+﻿using ControlSharp.Api.Database;
+using ControlSharp.Api.Hubs.Interfaces;
+using ControlSharp.Model.Database.Assets;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,7 +21,7 @@ public class QuarantineAssetHub : Hub<IQuarantineAssetAction>
     
     public async Task Register(string Hash, string Hostname)
     {
-        List<Asset> Result = await _context.Asset.Where(asset => asset.Hash.Equals(Hash)).ToListAsync();
+        List<Asset> Result = await _context.Assets.Where(asset => asset.Hash.Equals(Hash)).ToListAsync();
         Asset Client = Result.FirstOrDefault();
         if (Client is not null)
         {
@@ -47,12 +47,12 @@ public class QuarantineAssetHub : Hub<IQuarantineAssetAction>
                 
                 Client.ConnectionId = Context.ConnectionId;
                 Client.LastOnline = DateTimeOffset.Now;
-                _context.Asset.Update(Client);
+                _context.Assets.Update(Client);
                 await _context.SaveChangesAsync();
             }
         }else
         {
-            await _context.Asset.AddAsync(new Asset()
+            await _context.Assets.AddAsync(new Asset()
             {
                 Id = Guid.NewGuid(),
                 Created = DateTimeOffset.Now,
