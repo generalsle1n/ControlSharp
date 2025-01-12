@@ -22,6 +22,7 @@ Builder.Services.AddSignalR(option =>
         option.AddFilter<GeneralHubFilter>();
     })
     .AddMessagePackProtocol();
+
 Builder.Services.AddDbContext<DatabaseContext>(options =>
 {
     string FolderPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -50,6 +51,7 @@ Builder.Configuration.AddInMemoryCollection(new List<KeyValuePair<string, string
 string Authority = Builder.Configuration.GetValue<string>("ControlSharpIdentityServer");
 string ClientId = Builder.Configuration.GetValue<string>("ControlSharpApiOICDId");
 string ClientSecret = Builder.Configuration.GetValue<string>("ControlSharpApiOICDSecret");
+
 
 Builder.Services.AddAuthentication()
     .AddOAuth2Introspection(async options =>
@@ -90,11 +92,6 @@ app.UseAuthorization();
 app.MapHub<QuarantineAssetHub>("/login", config =>
 {
     config.AllowStatefulReconnects = true;
-});
-app.MapHub<RegisteredAssetHub>($"/{app.Configuration.GetValue<string>("AssetHubId")}", config =>
-{
-    config.AllowStatefulReconnects = true;
-    config.CloseOnAuthenticationExpiration = true;
 });
 
 app.MapControllers();
