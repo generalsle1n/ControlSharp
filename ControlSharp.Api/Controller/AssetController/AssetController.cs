@@ -56,6 +56,7 @@ public class AssetController : ControllerBase
         }
         else
         {
+            _logger.LogWarning($"Asset requested but not exist ({ID})");
             return NotFound();
         }
     }
@@ -72,12 +73,17 @@ public class AssetController : ControllerBase
             {
                 asset.Registered = true;
                 await _context.SaveChangesAsync(token);
+                _logger.LogInformation($"Asset registerd {asset.Id}");
                 return Ok(asset);
             }
+            else
+            {
+                _logger.LogWarning($"Requested to Register asset {ID} but not found");
             return NotFound();
         }
         catch (Exception e)
         {
+            _logger.LogError(e, "Unable to register Asset");
             return StatusCode(500);
         }
     }
@@ -105,12 +111,18 @@ public class AssetController : ControllerBase
                 await QuarantineClient.DestroyAssetAsync();
                 await RegisteredClient.DestroyAssetAsync();
                 
+                _logger.LogInformation($"Deleted Asset {asset.Id}");
+
                 return Ok(asset);
             }
+            else
+            {
+                _logger.LogWarning($"Requested to delete Asset ({ID}) but it dont exist");
             return NotFound();
         }
         catch (Exception e)
         {
+            _logger.LogError(e, "Unable to delete Asset");
             return StatusCode(500);
         }
     }
