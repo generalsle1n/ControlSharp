@@ -1,7 +1,8 @@
+using ControlSharp.Api.Database;
 using ControlSharp.Api.Hubs;
 using ControlSharp.Api.Hubs.Interfaces;
-using ControlSharp.Database.Identity;
-using ControlSharp.Database.Identity.Model;
+using ControlSharp.Model.Database.Assets;
+using ControlSharp.Model.Identity.Role;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +35,7 @@ public class AssetController : ControllerBase
     [Route("[action]")]
     public async Task<ActionResult<List<Asset>>> Registered()
     {
-        return _context.Asset.Where(asset => asset.Registered == true).ToList();
+        return _context.Assets.Where(asset => asset.Registered == true).ToList();
     }
     
     [HttpGet]
@@ -42,7 +43,7 @@ public class AssetController : ControllerBase
     [Route("[action]")]
     public async Task<ActionResult<List<Asset>>> Unregistered()
     {
-        return _context.Asset.Where(asset => asset.Registered == false).ToList();
+        return _context.Assets.Where(asset => asset.Registered == false).ToList();
     }
 
     [HttpGet]
@@ -50,7 +51,7 @@ public class AssetController : ControllerBase
     [Route("{ID}")]
     public async Task<ActionResult<Asset>> GetAsset(Guid ID)
     {
-        Asset asset = await _context.Asset.FindAsync(ID);
+        Asset asset = await _context.Assets.FindAsync(ID);
         if (asset is not null)
         {
             return Ok(asset);
@@ -68,7 +69,7 @@ public class AssetController : ControllerBase
     {
         try
         {
-            Asset asset = await _context.Asset.FindAsync(ID);
+            Asset asset = await _context.Assets.FindAsync(ID);
             if (asset is not null)
             {
                 asset.Registered = true;
@@ -90,13 +91,13 @@ public class AssetController : ControllerBase
     {
         try
         {
-            Asset asset = await _context.Asset.FindAsync(ID);
+            Asset asset = await _context.Assets.FindAsync(ID);
             if (asset is not null)
             {
                 if (asset.Banned != true)
                 {
                     asset.Banned = true;
-                    _context.Asset.Update(asset);
+                    _context.Assets.Update(asset);
                     await _context.SaveChangesAsync(token);
                 }
                 
