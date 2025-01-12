@@ -6,6 +6,10 @@ namespace ControlSharp.Identity.Config.ApiResourceConfig
     {
         internal static ApiResource Resource = new ApiResource()
         {
+            UserClaims = new List<string>
+            {
+                "role"
+            },
             Scopes = new List<string>()
             {
                 "ControlSharp-Api"
