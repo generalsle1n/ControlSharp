@@ -80,8 +80,8 @@ public class AssetController : ControllerBase
             else
             {
                 _logger.LogWarning($"Requested to Register asset {ID} but not found");
-            return NotFound();
-        }
+                return NotFound();
+            }
         }
         catch (Exception e)
         {
@@ -113,7 +113,7 @@ public class AssetController : ControllerBase
 
                 await QuarantineClient.DestroyAssetAsync();
                 await RegisteredClient.DestroyAssetAsync();
-                
+
                 _logger.LogInformation($"Deleted Asset {asset.Id}");
 
                 return Ok(asset);
@@ -121,8 +121,8 @@ public class AssetController : ControllerBase
             else
             {
                 _logger.LogWarning($"Requested to delete Asset ({ID}) but it dont exist");
-            return NotFound();
-        }
+                return NotFound();
+            }
         }
         catch (Exception e)
         {
