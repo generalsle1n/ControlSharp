@@ -55,7 +55,5 @@ builder.AddProject<ControlSharp_Client>("ControlSharp-Client")
     .WaitFor(ControlUi)
     .WithEnvironment("server", ControlApi.GetEndpoint("https"));
 
-
-
 DistributedApplication app = builder.Build();
 await app.RunAsync();
