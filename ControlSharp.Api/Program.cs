@@ -54,20 +54,34 @@ string ClientSecret = Builder.Configuration.GetValue<string>("ControlSharpApiOIC
 
 
 Builder.Services.AddAuthentication()
-    .AddOAuth2Introspection(async options =>
+    .AddOAuth2Introspection(async (options) =>
 {
         options.Authority = Authority;
         options.ClientId = ClientId;
         options.ClientSecret = ClientSecret;
+        options.RoleClaimType = "role";
     });
     
+Builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(nameof(Roles.ControlSharpApi_Super_Write), policy =>
+    {
+        policy.RequireRole(nameof(Roles.ControlSharpApi_Super_Write));
 });
 
-Builder.Services.AddAuthorization(option =>
-{
-    option.AddPolicy(AccessRole.Super.ToString(), policy =>
+    options.AddPolicy(nameof(Roles.ControlSharpApi_Super_Read), policy =>
     {
-        policy.RequireRole(AccessRole.Super.ToString());
+        policy.RequireRole(nameof(Roles.ControlSharpApi_Super_Read), nameof(Roles.ControlSharpApi_Super_Write));
+    });
+
+    options.AddPolicy(nameof(Roles.ControlSharpApi_Asset_Write), policy =>
+{
+        policy.RequireRole(nameof(Roles.ControlSharpApi_Asset_Write));
+    });
+
+    options.AddPolicy(nameof(Roles.ControlSharpApi_Asset_Read), policy =>
+    {
+        policy.RequireRole(nameof(Roles.ControlSharpApi_Asset_Read));
     });
 });
 
