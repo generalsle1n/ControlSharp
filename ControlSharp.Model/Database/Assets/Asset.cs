@@ -16,7 +16,7 @@ namespace ControlSharp.Model.Database.Assets
         public string? Ip { get; set; }
         public bool? Active { get; set; }
         public bool? Registered { get; set; }
-        public bool? Banned { get; set; }
+        public bool Banned { get; set; }
         public string? ConnectionId { get; set; }
     }
 }
