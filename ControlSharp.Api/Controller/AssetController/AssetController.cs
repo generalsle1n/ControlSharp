@@ -4,7 +4,6 @@ using ControlSharp.Api.Hubs.Interfaces;
 using ControlSharp.Model.Database.Assets;
 using ControlSharp.Model.Identity.Role;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
@@ -13,8 +12,7 @@ namespace ControlSharp.Api.Controller.AssetController;
 [ApiController]
 [Route("api/v0.1/[controller]")]
 [Produces("application/json")]
-[Authorize(Policy = nameof(AccessRole.Asset))]
-
+[Authorize(Policy = nameof(Roles.ControlSharpApi_Super_Read))]
 public class AssetController : ControllerBase
 {
     private readonly DatabaseContext _context;
@@ -31,7 +29,7 @@ public class AssetController : ControllerBase
     }
     
     [HttpGet]
-    [Authorize(Policy  = nameof(AccessRole.Super))]
+    [Authorize(Policy = nameof(Roles.ControlSharpApi_Super_Read))]
     [Route("[action]")]
     public async Task<ActionResult<List<Asset>>> Registered()
     {
@@ -39,7 +37,7 @@ public class AssetController : ControllerBase
     }
     
     [HttpGet]
-    [Authorize(Policy  = nameof(AccessRole.Super))]
+    [Authorize(Policy = nameof(Roles.ControlSharpApi_Super_Write))]
     [Route("[action]")]
     public async Task<ActionResult<List<Asset>>> Unregistered()
     {
@@ -47,7 +45,7 @@ public class AssetController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Policy = nameof(AccessRole.Super))]
+    [Authorize(Policy = nameof(Roles.ControlSharpApi_Super_Read))]
     [Route("{ID}")]
     public async Task<ActionResult<Asset>> GetAsset(Guid ID)
     {
@@ -63,7 +61,7 @@ public class AssetController : ControllerBase
     }
     
     [HttpPost]
-    [Authorize(Policy = nameof(AccessRole.Super))]
+    [Authorize(Policy = nameof(Roles.ControlSharpApi_Super_Write))]
     [Route("{ID}")]
     public async Task<ActionResult> CreateAsset(Guid ID, CancellationToken token)
     {
@@ -85,7 +83,7 @@ public class AssetController : ControllerBase
     }
     
     [HttpDelete]
-    [Authorize(Policy = nameof(AccessRole.Super))]
+    [Authorize(Policy = nameof(Roles.ControlSharpApi_Super_Write))]
     [Route("{ID}")]
     public async Task<ActionResult> DeleteAsset(Guid ID, CancellationToken token)
     {
