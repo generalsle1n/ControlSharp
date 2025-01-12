@@ -1,9 +1,5 @@
 @using System.Text
-@using ControlSharp.Database.Identity.Model
-@using Microsoft.AspNetCore.Authentication
-@using Microsoft.AspNetCore.Identity
-@inject SignInManager<User> SignInManager
-@inject IHttpClientFactory ClientFactory
+@using ControlSharp.Model.Database.Assets
 @model IEnumerable<Asset>
 @{
     ViewData["Title"] = "Assets";
