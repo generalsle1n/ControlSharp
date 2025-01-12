@@ -1,10 +1,6 @@
-using ControlSharp.Database.Identity;
-using ControlSharp.Database.Identity.Model;
 using ControlSharp.Model.Identity.Role;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
