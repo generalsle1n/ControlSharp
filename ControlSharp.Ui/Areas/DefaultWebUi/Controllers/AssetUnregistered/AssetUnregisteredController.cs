@@ -2,6 +2,7 @@
 
 namespace ControlSharp.Ui.Areas.DefaultWebUi.Controllers.AssetUnregistered
 {
+    [Area("DefaultWebUi")]
     public class AssetUnregisteredController : Controller
     {
         public IActionResult Index()
