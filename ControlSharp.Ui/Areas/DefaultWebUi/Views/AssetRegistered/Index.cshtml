@@ -1,1 +1,49 @@
-﻿<h1>Regisered</h1>
+﻿@using ControlSharp.Model.Database.Assets
+@{
+	var asset = new Asset()
+			{
+				Created = DateTimeOffset.Now.AddDays(-1),
+				Hash = "aaaaaaaaaaaa",
+				Id = Guid.NewGuid(),
+				Name = "Hacked",
+				Active = true,
+				LastOnline = DateTimeOffset.Now,
+				Ip = "127.0.0.1",
+				Registered = true
+			};
+	List<Asset> All = new List<Asset>();
+	All.Add(asset);
+}
+<div class="table-responsive text-nowrap">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>ID</th>
+				<th>IP</th>
+				<th>Last Online</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody class="table-border-bottom-0">
+			@foreach (Asset SingleAsset in All)
+			{
+				<tr>
+					<td>@SingleAsset.Name</td>
+					<td>@SingleAsset.Id</td>
+					<td>@SingleAsset.Ip</td>
+					<td>@SingleAsset.LastOnline</td>
+					<td>
+						<div class="dropdown">
+							<button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+								<a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+							</div>
+						</div>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
