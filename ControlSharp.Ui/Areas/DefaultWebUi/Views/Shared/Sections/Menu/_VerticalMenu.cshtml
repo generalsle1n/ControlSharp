@@ -132,6 +132,32 @@
                 </li>
             </ul>
         </li>
+        <!-- Assets -->
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Assets</span>
+        </li>
+
+        <li class='menu-item@(currentPage == "/Cards/Basic" ? " active" : "")'>
+            <a asp-area="DefaultWebUi" asp-controller="AssetBanned" asp-action="Index" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div class="text-truncate" data-i18n="Cards">Banned</div>
+            </a>
+        </li>
+
+        <li class='menu-item@(currentPage == "/Cards/Basic" ? " active" : "")'>
+            <a asp-area="DefaultWebUi" asp-controller="AssetRegistered" asp-action="Index" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div class="text-truncate" data-i18n="Cards">Registered</div>
+            </a>
+        </li>
+
+        <li class='menu-item@(currentPage == "/Cards/Basic" ? " active" : "")'>
+            <a asp-area="DefaultWebUi" asp-controller="AssetUnregistered" asp-action="Index" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div class="text-truncate" data-i18n="Cards">Unregistered</div>
+            </a>
+        </li>
+
         <!-- Apps & Pages -->
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Apps &amp; Pages</span>
